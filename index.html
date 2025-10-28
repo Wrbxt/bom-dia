@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bom Dia Interativo 🌅</title>
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('https://lirp.cdn-website.com/46e9b5ee/dms3rep/multi/opt/20230416_085110970_iOS-1920w.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    overflow: hidden;
+  }
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    width: 90%;
+    max-width: 800px;
+    padding: 20px;
+    backdrop-filter: blur(4px);
+    border-radius: 12px;
+    background: rgba(0,0,0,0.25);
+    animation: fadeIn 1s ease-in;
+  }
+
+  #message {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    line-height: 1.4;
+    opacity: 1;
+    transition: all 0.5s ease;
+  }
+
+  #message.show { opacity: 1; transform: scale(1); }
+
+  button {
+    padding: 12px 24px;
+    margin: 8px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 1em;
+  }
+
+  button:hover { background: rgba(255,255,255,0.4); transform: scale(1.05); }
+
+  #continueBtn { display: none; animation: blink 1s step-end infinite; }
+
+  .cursor { display: inline-block; width: 2px; background: #fff; animation: blink 0.8s step-end infinite; }
+
+  @keyframes blink { 50% { opacity: 0 } }
+  @keyframes fadeIn { from {opacity:0;} to{opacity:1;} }
+
+</style>
+</head>
+<body>
+
+<div class="overlay"></div>
+
+<div class="container">
+  <div id="message">
+    Bom dia, minha baixinha 🌞💛<br><br>
+    Clique em um dos botões abaixo para que eu te envie algumas palavras carinhosas e alegres que vão iluminar seu dia!
+  </div>
+
+  <div id="buttons">
+    <button data-id="1" onclick="startSequence(1)">Carinho ☕</button>
+    <button data-id="2" onclick="startSequence(2)">Memórias ✨</button>
+    <button data-id="3" onclick="startSequence(3)">Ousadia 😏</button>
+    <button data-id="4" onclick="startSequence(4)">Bom dia 🌞</button>
+  </div>
+
+  <button id="continueBtn" onclick="nextMessage()">Continuar</button>
+</div>
+
+<script>
+const sequences = {
+  1: [
+    "Bom dia, princesa. Pensei em te mandar um café, mas achei que um bilhete ia durar mais no pensamento... ☕",
+    "Se o dia tá pesado, lembra: tem alguém torcendo pra ver você sorrir agora.",
+    "Imagino você com uma xícara nas mãos, tentando decidir qual música combina com seu olhar hoje.",
+    "E se eu aparecesse com um cobertor e duas canecas? 😉",
+    "Pra fechar: guarda esse pensamento — você é quem faz meu dia mais especial."
+  ],
+  2: [
+    "Lembra daquela tarde que a gente riu até a barriga doer? Gosto de imaginar você com esse riso fácil.",
+    "As pequenas memórias ficam maiores quando penso em teus gestos e no seu jeito de encostar no braço.",
+    "Dá vontade de repetir as melhores partes, e pular as vergonhas — só ficar com os abraços.",
+    "Se fosse possível prender um segundo, eu prenderia aquele em que você olhou sem querer e eu quis responder com um beijo.",
+    "Hoje quero criar uma nova memória: a de te ver surpresa por um elogio inesperado."
+  ],
+  3: [
+    "Vou ser direto: seu sorriso tem um efeito imprudente em mim. Acorda atalhando pensamentos.",
+    "Queria sussurrar algo no seu ouvido que fizesse seu rosto corar com elegância.",
+    "Imagina eu te provocando num jogo de olhares, e você ganhando por saber o que quer.",
+    "Há algo delicioso na linha entre o doce e o atrevimento. Você pisa nela com classe.",
+    "Se o dia tivesse voz, diria: 'não deixe essa oportunidade escapar' — e eu concordaria."
+  ],
+  4: [
+    "Bom dia! Que a manhã comece com energia e alegria pra você.",
+    "Que seu sorriso ilumine quem está por perto hoje.",
+    "Respira fundo e sente o calor do sol te enchendo de boas vibrações.",
+    "Aproveita cada instante e espalha leveza no seu caminho.",
+    "Última: que seu dia seja tão especial quanto você e cheio de momentos felizes."
+  ]
+};
+
+let currentSeq = [];
+let currentIndex = 0;
+
+const messageEl = document.getElementById('message');
+const buttonsEl = document.getElementById('buttons');
+const continueBtn = document.getElementById('continueBtn');
+
+function typeMessage(text) {
+  return new Promise(resolve => {
+    messageEl.classList.remove('show');
+    messageEl.textContent = '';
+    let i = 0;
+    const cursor = document.createElement('span');
+    cursor.className = 'cursor';
+    messageEl.appendChild(cursor);
+    const interval = setInterval(() => {
+      if (i < text.length) {
+        cursor.insertAdjacentText('beforebegin', text[i]);
+        i++;
+      } else {
+        clearInterval(interval);
+        setTimeout(() => { cursor.remove(); messageEl.classList.add('show'); resolve(); }, 100);
+      }
+    }, 30);
+  });
+}
+
+async function startSequence(id) {
+  buttonsEl.style.display = 'none';
+  continueBtn.style.display = 'inline-block';
+  currentSeq = sequences[id];
+  currentIndex = 0;
+  messageEl.style.fontSize = '1.6em';
+  await typeMessage(currentSeq[currentIndex]);
+}
+
+async function nextMessage() {
+  currentIndex++;
+  if (currentIndex < currentSeq.length) {
+    await typeMessage(currentSeq[currentIndex]);
+  } else {
+    continueBtn.style.display = 'none';
+    // Criar dinamicamente os botões finais
+    const instagramBtn = document.createElement('a');
+    instagramBtn.href = "https://www.instagram.com/felipesilvmota?igsh=MXgzc3ZiZWNvbDh4Mg%3D%3D&utm_source=qr";
+    instagramBtn.target = "_blank";
+    instagramBtn.id = "instagramBtn";
+    instagramBtn.textContent = "Continuar no Instagram 📲";
+    instagramBtn.style.background = "#E1306C";
+    instagramBtn.style.color = "#fff";
+    instagramBtn.style.padding = "12px 24px";
+    instagramBtn.style.borderRadius = "25px";
+    instagramBtn.style.display = "inline-block";
+    instagramBtn.style.marginTop = "12px";
+    instagramBtn.style.textDecoration = "none";
+
+    const backBtn = document.createElement('button');
+    backBtn.textContent = "Voltar ao início 🔄";
+    backBtn.id = "backBtn";
+    backBtn.style.background = "rgba(255,255,255,0.2)";
+    backBtn.style.color = "#fff";
+    backBtn.style.padding = "12px 24px";
+    backBtn.style.borderRadius = "25px";
+    backBtn.style.marginLeft = "10px";
+    backBtn.onclick = goBack;
+
+    document.querySelector('.container').appendChild(instagramBtn);
+    document.querySelector('.container').appendChild(backBtn);
+  }
+}
+
+function goBack() {
+  messageEl.innerHTML = `Bom dia, minha baixinha 🌞💛<br><br>
+Clique em um dos botões abaixo para que eu te envie algumas palavras carinhosas e alegres que vão iluminar seu dia!`;
+
+  buttonsEl.style.display = 'block';
+  continueBtn.style.display = 'none';
+
+  // Remover botões finais se existirem
+  const instagramBtn = document.getElementById('instagramBtn');
+  const backBtn = document.getElementById('backBtn');
+  if (instagramBtn) instagramBtn.remove();
+  if (backBtn) backBtn.remove();
+}
+</script>
+
+</body>
+</html>
