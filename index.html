@@ -1,215 +1,195 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bom Dia Interativo 🌅</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Carta — Encerramento</title>
 <style>
-  body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: 'Poppins', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  :root{
+    --glass: rgba(0,0,0,0.36);
+    --accent: #ffdca3;
+    --text: #fff;
+    --muted: #dfeaf7;
+  }
+  *{box-sizing:border-box}
+  html,body{
+    height:100%;
+    margin:0;
+    font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     background: url('https://lirp.cdn-website.com/46e9b5ee/dms3rep/multi/opt/20230416_085110970_iOS-1920w.jpg') no-repeat center center fixed;
     background-size: cover;
-    color: #fff;
-    overflow: hidden;
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
   }
 
-  .overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.3);
-    z-index: 0;
+  /* overlay */
+  .overlay{
+    position:fixed;
+    inset:0;
+    background: linear-gradient(180deg, rgba(5,10,20,0.46), rgba(0,0,0,0.55));
+    z-index:0;
   }
 
-  .container {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    width: 90%;
-    max-width: 800px;
-    padding: 20px;
-    backdrop-filter: blur(4px);
-    border-radius: 12px;
-    background: rgba(0,0,0,0.25);
-    animation: fadeIn 1s ease-in;
+  .wrap{
+    position:relative;
+    z-index:2;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:32px;
   }
 
-  #message {
-    font-size: 1.8em;
-    margin-bottom: 20px;
-    line-height: 1.4;
-    opacity: 1;
-    transition: all 0.5s ease;
+  .card{
+    width:min(920px, 94%);
+    background: linear-gradient(180deg, rgba(0,0,0,0.28), rgba(255,255,255,0.02));
+    border-radius:14px;
+    padding:28px;
+    box-shadow: 0 20px 60px rgba(3,6,12,0.6);
+    backdrop-filter: blur(6px) saturate(1.05);
+    border: 1px solid rgba(255,255,255,0.04);
   }
 
-  #message.show { opacity: 1; transform: scale(1); }
-
-  button {
-    padding: 12px 24px;
-    margin: 8px;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.3s;
-    background: rgba(255,255,255,0.2);
-    color: #fff;
-    font-size: 1em;
+  .title{
+    font-size: clamp(20px, 3vw, 28px);
+    color: var(--accent);
+    margin: 0 0 10px 0;
+    letter-spacing: 0.2px;
   }
 
-  button:hover { background: rgba(255,255,255,0.4); transform: scale(1.05); }
+  .subtitle{
+    color: var(--muted);
+    margin: 0 0 18px 0;
+    font-size: clamp(13px, 1.5vw, 16px);
+  }
 
-  #continueBtn { display: none; animation: blink 1s step-end infinite; }
+  .message {
+    min-height:260px;
+    font-size: clamp(16px, 1.6vw, 18px);
+    line-height:1.55;
+    color: #fbfbfb;
+    white-space:pre-wrap;
+    overflow-wrap:break-word;
+    transition: transform .28s ease, opacity .28s ease;
+    opacity:0;
+    transform: translateY(6px) scale(0.998);
+  }
 
-  .cursor { display: inline-block; width: 2px; background: #fff; animation: blink 0.8s step-end infinite; }
+  .message.show{
+    opacity:1;
+    transform:none;
+  }
 
-  @keyframes blink { 50% { opacity: 0 } }
-  @keyframes fadeIn { from {opacity:0;} to{opacity:1;} }
+  .cursor{
+    display:inline-block;
+    width:3px;
+    height:1.1em;
+    background: #fff;
+    vertical-align:bottom;
+    margin-left:6px;
+    animation: blink .8s steps(1) infinite;
+  }
+  @keyframes blink{50%{opacity:0}}
 
+  .signature{
+    margin-top:18px;
+    text-align:right;
+    font-weight:600;
+    color: #ffdca3;
+    font-size: 0.98rem;
+  }
+
+  /* small footer */
+  .footer{
+    margin-top:16px;
+    display:flex;
+    gap:10px;
+    align-items:center;
+    justify-content:space-between;
+    color:rgba(255,255,255,0.6);
+    font-size:13px;
+  }
+
+  .meta {
+    opacity:0.9;
+  }
+
+  /* responsive */
+  @media (max-width:520px){
+    .card{ padding:18px; }
+    .message{ min-height:220px; font-size:15px }
+  }
 </style>
 </head>
 <body>
+  <div class="overlay" aria-hidden="true"></div>
 
-<div class="overlay"></div>
+  <main class="wrap" role="main">
+    <article class="card" aria-live="polite">
+      <h1 class="title">Carta de encerramento</h1>
+      <div class="subtitle">Uma palavra sincera para encerrar com respeito — sem volta, sem amizade forçada.</div>
 
-<div class="container">
-  <div id="message">
-    Bom dia, minha baixinha 🌞💛<br><br>
-    Clique em um dos botões abaixo para que eu te envie algumas palavras carinhosas e alegres que vão iluminar seu dia!
-  </div>
+      <div id="message" class="message" aria-atomic="true" aria-live="assertive"></div>
 
-  <div id="buttons">
-    <button data-id="1" onclick="startSequence(1)">Carinho ☕</button>
-    <button data-id="2" onclick="startSequence(2)">Memórias ✨</button>
-    <button data-id="3" onclick="startSequence(3)">Ousadia 😏</button>
-    <button data-id="4" onclick="startSequence(4)">Bom dia 🌞</button>
-  </div>
+      <div class="signature" id="signature" style="display:none">
+        — Felipe Silva Mota
+      </div>
 
-  <button id="continueBtn" onclick="nextMessage()">Continuar</button>
-</div>
+      <div class="footer" aria-hidden="true">
+        <div class="meta">Mensagem enviada</div>
+        <div style="opacity:.7;font-size:13px">Se cuida.</div>
+      </div>
+    </article>
+  </main>
 
 <script>
-const sequences = {
-  1: [
-    "Bom dia, princesa. Pensei em te mandar um café, mas achei que um bilhete ia durar mais no pensamento... ☕",
-    "Se o dia tá pesado, lembra: tem alguém torcendo pra ver você sorrir agora.",
-    "Imagino você com uma xícara nas mãos, tentando decidir qual música combina com seu olhar hoje.",
-    "E se eu aparecesse com um cobertor e duas canecas? 😉",
-    "Pra fechar: guarda esse pensamento — você é quem faz meu dia mais especial."
-  ],
-  2: [
-    "Lembra daquela tarde que a gente riu até a barriga doer? Gosto de imaginar você com esse riso fácil.",
-    "As pequenas memórias ficam maiores quando penso em teus gestos e no seu jeito de encostar no braço.",
-    "Dá vontade de repetir as melhores partes, e pular as vergonhas — só ficar com os abraços.",
-    "Se fosse possível prender um segundo, eu prenderia aquele em que você olhou sem querer e eu quis responder com um beijo.",
-    "Hoje quero criar uma nova memória: a de te ver surpresa por um elogio inesperado."
-  ],
-  3: [
-    "Vou ser direto: seu sorriso tem um efeito imprudente em mim. Acorda atalhando pensamentos.",
-    "Queria sussurrar algo no seu ouvido que fizesse seu rosto corar com elegância.",
-    "Imagina eu te provocando num jogo de olhares, e você ganhando por saber o que quer.",
-    "Há algo delicioso na linha entre o doce e o atrevimento. Você pisa nela com classe.",
-    "Se o dia tivesse voz, diria: 'não deixe essa oportunidade escapar' — e eu concordaria."
-  ],
-  4: [
-    "Bom dia! Que a manhã comece com energia e alegria pra você.",
-    "Que seu sorriso ilumine quem está por perto hoje.",
-    "Respira fundo e sente o calor do sol te enchendo de boas vibrações.",
-    "Aproveita cada instante e espalha leveza no seu caminho.",
-    "Última: que seu dia seja tão especial quanto você e cheio de momentos felizes."
-  ]
-};
+/* Texto final: carta reflexiva, madura e clara.
+   Aparece com efeito de digitação. */
+const text = `Eu não queria que isso terminasse assim. Juro que não.  
+Desde o começo eu deixei claro o meu jeito: sou 8 ou 80 — quando me entrego, me entrego de verdade. Eu tentei ser inteiro com você, me dedicar, notar os detalhes, acompanhar.  
 
-let currentSeq = [];
-let currentIndex = 0;
+Mas, na conversa de hoje, ficou claro que as coisas mudaram pra você. Você falou que se sentia pressionada, que tinha perdido paciência com o que chamou de fútil, e que eu estava “de mimimi”. Ouvi você. Tentei entender. E eu entendo que a vida é corrida — estudo, trabalho, responsabilidades — e que nem sempre dá pra corresponder do jeito que o outro espera.  
 
-const messageEl = document.getElementById('message');
-const buttonsEl = document.getElementById('buttons');
-const continueBtn = document.getElementById('continueBtn');
+Só que também não dá pra fingir que não dói ver o cuidado virar problema. Quando você impôs limites de conversar só à noite, dizendo que precisava respirar e que aquilo tudo era demais, eu percebi que o espaço entre a gente cresceu demais. Você pediu para parar — e eu tentei dialogar. Eu falei desde sempre que sou assim: me entrego ou me afasto. Você decidiu que queria menos intensidade. E eu, depois de tentar e tentar, não posso mais ficar me diminuindo pra caber no molde do que você precisa.  
 
-function typeMessage(text) {
-  return new Promise(resolve => {
-    messageEl.classList.remove('show');
-    messageEl.textContent = '';
-    let i = 0;
-    const cursor = document.createElement('span');
-    cursor.className = 'cursor';
-    messageEl.appendChild(cursor);
-    const interval = setInterval(() => {
-      if (i < text.length) {
-        cursor.insertAdjacentText('beforebegin', text[i]);
-        i++;
-      } else {
-        clearInterval(interval);
-        setTimeout(() => { cursor.remove(); messageEl.classList.add('show'); resolve(); }, 100);
-      }
-    }, 30);
-  });
-}
+Minha mãe passou por coisas parecidas e deixou duas palavras guardadas na minha cabeça: “pressionar” e “fútil”. Essas palavras me pegaram ranço porque mostram, no fundo, que a pessoa foi colocada em posição de escolher o mínimo e descartar o resto. Não quero viver numa relação onde meus gestos são classificados como problema.  
 
-async function startSequence(id) {
-  buttonsEl.style.display = 'none';
-  continueBtn.style.display = 'inline-block';
-  currentSeq = sequences[id];
-  currentIndex = 0;
-  messageEl.style.fontSize = '1.6em';
-  await typeMessage(currentSeq[currentIndex]);
-}
+Vi você mandar um Reels — uma indireta sobre amor e o que ele é — e fiquei pensando: talvez fosse um sinal de arrependimento, talvez só um recado. Mas o arrependimento nas entrelinhas não conserta o acúmulo de pequenas ações que levaram a isso. Não posso ser abrigo de palavras vagas.  
 
-async function nextMessage() {
-  currentIndex++;
-  if (currentIndex < currentSeq.length) {
-    await typeMessage(currentSeq[currentIndex]);
+Quero que saiba que eu queria continuar. Eu queria que desse certo. Mas você escolheu parar dessa forma, e eu preciso preservar quem eu sou. Por isso estou encerrando aqui o último contato. Não é por raiva — é por cuidado comigo. Não quero forçar amizade, nem manter esperança vazia. Vou seguir em frente, bloquear o que for preciso nas redes e proteger meu espaço.  
+
+Agradeço pelo tempo que passamos — pelas risadas, pelo carinho, pelos momentos que foram verdadeiros. Levo o que foi bom, aprendo com o que foi difícil, e sigo cuidando de mim.  
+Desejo que você encontre o que procura, e que, quando olhar pra trás, consiga reconhecer aquilo que tivemos com honestidade.`;
+
+const el = document.getElementById('message');
+const sig = document.getElementById('signature');
+let i = 0;
+
+function typeWriter(){
+  if(i < text.length){
+    // Ativa aria update
+    el.innerHTML = text.slice(0, i+1) + '<span class="cursor" aria-hidden="true"></span>';
+    i++;
+    // ajusta velocidade: pequenas pausas em vírgulas e pontos
+    let delay = 28;
+    const ch = text[i-1];
+    if(ch === ',' ) delay = 90;
+    if(ch === '.' ) delay = 240;
+    if(ch === '\n') delay = 160;
+    setTimeout(typeWriter, delay);
   } else {
-    continueBtn.style.display = 'none';
-    // Criar dinamicamente os botões finais
-    const instagramBtn = document.createElement('a');
-    instagramBtn.href = "https://www.instagram.com/felipesilvmota?igsh=MXgzc3ZiZWNvbDh4Mg%3D%3D&utm_source=qr";
-    instagramBtn.target = "_blank";
-    instagramBtn.id = "instagramBtn";
-    instagramBtn.textContent = "Continuar no Instagram 📲";
-    instagramBtn.style.background = "#E1306C";
-    instagramBtn.style.color = "#fff";
-    instagramBtn.style.padding = "12px 24px";
-    instagramBtn.style.borderRadius = "25px";
-    instagramBtn.style.display = "inline-block";
-    instagramBtn.style.marginTop = "12px";
-    instagramBtn.style.textDecoration = "none";
-
-    const backBtn = document.createElement('button');
-    backBtn.textContent = "Voltar ao início 🔄";
-    backBtn.id = "backBtn";
-    backBtn.style.background = "rgba(255,255,255,0.2)";
-    backBtn.style.color = "#fff";
-    backBtn.style.padding = "12px 24px";
-    backBtn.style.borderRadius = "25px";
-    backBtn.style.marginLeft = "10px";
-    backBtn.onclick = goBack;
-
-    document.querySelector('.container').appendChild(instagramBtn);
-    document.querySelector('.container').appendChild(backBtn);
+    // final
+    el.textContent = text;
+    el.classList.add('show');
+    sig.style.display = 'block';
   }
 }
 
-function goBack() {
-  messageEl.innerHTML = `Bom dia, minha baixinha 🌞💛<br><br>
-Clique em um dos botões abaixo para que eu te envie algumas palavras carinhosas e alegres que vão iluminar seu dia!`;
-
-  buttonsEl.style.display = 'block';
-  continueBtn.style.display = 'none';
-
-  // Remover botões finais se existirem
-  const instagramBtn = document.getElementById('instagramBtn');
-  const backBtn = document.getElementById('backBtn');
-  if (instagramBtn) instagramBtn.remove();
-  if (backBtn) backBtn.remove();
-}
+window.addEventListener('load', () => {
+  // iniciar digitação suave com pequena pausa para efeito
+  setTimeout(typeWriter, 500);
+});
 </script>
-
 </body>
 </html>
