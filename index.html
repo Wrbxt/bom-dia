@@ -37,15 +37,8 @@ h1{
   font-size:1.3em;
   line-height:1.6;
   white-space: pre-wrap;
-  opacity:0;
   text-align:left;
 }
-.cursor{
-  display:inline-block; width:3px; height:1.2em;
-  background:#fff; vertical-align:bottom; margin-left:3px;
-  animation: blink 0.8s steps(1) infinite;
-}
-@keyframes blink{50%{opacity:0}}
 #continueBtn{
   display:none;
   margin-top:25px;
@@ -130,9 +123,9 @@ function showParagraphs(paragraphs, callback){
       p.className = 'fadePara';
       p.textContent = paragraphs[idx];
       messageDiv.appendChild(p);
-      setTimeout(()=>{p.classList.add('show');}, 50);
+      setTimeout(()=>{p.classList.add('show');},50);
       idx++;
-      setTimeout(showNext, 500 + paragraphs[idx-1].length*20);
+      setTimeout(showNext, 800); // delay fixado pra aparecer normalmente
     } else if(callback){
       callback();
     }
