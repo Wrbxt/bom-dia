@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Carta de Encerramento</title>
+<title>Carta de Encerramento Cinematográfica</title>
 <style>
 body,html{
   margin:0; padding:0; height:100%;
@@ -12,6 +12,7 @@ body,html{
   background-size: cover;
   display:flex; justify-content:center; align-items:center;
   color:#fff;
+  overflow:hidden;
 }
 .overlay{
   position:absolute; inset:0;
@@ -21,25 +22,24 @@ body,html{
 .container{
   position:relative; z-index:1;
   max-width:800px;
-  padding:30px;
+  padding:40px;
   background: rgba(0,0,0,0.35);
   border-radius:15px;
   text-align:center;
 }
 h1{
-  font-size:2.2em;
-  margin-bottom:25px;
+  font-size:2.4em;
+  margin-bottom:30px;
   color:#ffdca3;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
 }
 #message{
   font-size:1.3em;
-  line-height:1.55;
+  line-height:1.6;
   white-space: pre-wrap;
   opacity:0;
-  transition: opacity 1s ease-in;
   text-align:left;
 }
-.show{opacity:1;}
 .cursor{
   display:inline-block; width:3px; height:1.2em;
   background:#fff; vertical-align:bottom; margin-left:3px;
@@ -48,20 +48,31 @@ h1{
 @keyframes blink{50%{opacity:0}}
 #continueBtn{
   display:none;
-  margin-top:20px;
-  padding:10px 20px;
+  margin-top:25px;
+  padding:12px 25px;
   font-size:1.1em;
   background:#ffdca3;
   color:#000;
   border:none;
-  border-radius:8px;
+  border-radius:10px;
   cursor:pointer;
+  transition: transform 0.2s;
 }
+#continueBtn:hover{transform: scale(1.05);}
 .signature{
-  margin-top:20px; text-align:right; font-weight:600;
-  color:#ffdca3; opacity:0; transition: opacity 1.2s ease-in;
+  margin-top:25px; text-align:right; font-weight:600;
+  color:#ffdca3; opacity:0; transition: opacity 2s ease-in;
 }
 .signature.show{opacity:1;}
+.fadePara{
+  opacity:0;
+  transform: translateY(15px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+.fadePara.show{
+  opacity:1;
+  transform: translateY(0);
+}
 </style>
 </head>
 <body>
@@ -75,74 +86,75 @@ h1{
 
 <script>
 const parts = [
-`Eu não queria que isso terminasse assim. Juro que não.  
-Desde o começo eu deixei claro o meu jeito: sou 8 ou 80 — quando me entrego, me entrego de verdade.  
-Tentei ser inteiro com você, me dedicar, notar os detalhes, acompanhar.  
-
-Mas, na conversa de hoje, ficou claro que as coisas mudaram pra você.  
-Você falou que se sentia pressionada, que tinha perdido paciência com o que chamou de fútil, e que eu estava “de mimimi”.  
-Ouvi você. Tentei entender.  
-
-Minha mãe passou por algo parecido, e essas palavras — “pressionar” e “fútil” — marcaram minha vida, porque vi o quanto ela sofreu.  
-Não posso ignorar isso, nem deixar que essas palavras se repitam comigo.`,
-
-`Quero deixar claro que o problema que causou a discussão não foram minhas mensagens.  
-Foram suas mensagens, que você disse que eram “brincadeira”, mas que na realidade foram pesadas e sérias.  
-Nosso contato, nossa conexão, foi incrível.  
-Começamos a ter mais intimidade, e eu realmente queria ter aproveitado isso de forma leve, sem pressa.  
-Mas você ficou insegura em liberar tudo de uma vez, e talvez isso tenha nos impedido de viver experiências mais leves e prazerosas, inclusive na intimidade sexual.  
-Eu acredito que poderíamos ter tido momentos leves e bons, se a intimidade tivesse se desenvolvido naturalmente.  
-Esse choque me fez perceber que não podemos seguir como antes.`,
-
-`Agora quero deixar claro algo importante:  
-Eu não vou iniciar nenhuma conversa daqui pra frente, principalmente por mensagem.  
-Se você quiser realmente que a gente tenha alguma chance, você sabe os horários que estarei em casa — você que venha.  
-Se não vier, vou entender que também não quer mais, e seguirei meu caminho.  
-Não vou mandar mensagens, não vou pressionar.  
-Essa é a forma que encontrei de preservar meu espaço e seguir em paz.`
+[
+`Eu não queria que isso terminasse assim. Juro que não.`,
+`Desde o começo eu deixei claro o meu jeito: sou 8 ou 80 — quando me entrego, me entrego de verdade.`,
+`Tentei ser inteiro com você, me dedicar, notar os detalhes, acompanhar.`,
+`Na conversa de hoje, ficou claro que as coisas mudaram pra você.`,
+`Você falou que se sentia pressionada, que tinha perdido paciência com o que chamou de fútil, e que eu estava “de mimimi”.`,
+`Ouvi você. Tentei entender.`,
+`Minha mãe passou por algo parecido, e essas palavras — “pressionar” e “fútil” — marcaram minha vida, porque vi o quanto ela sofreu.`,
+`Não posso ignorar isso, nem deixar que essas palavras se repitam comigo.`
+],
+[
+`Quero deixar claro que o problema que causou a discussão não foram minhas mensagens.`,
+`Foram suas mensagens, que você disse que eram “brincadeira”, mas que na realidade foram pesadas e sérias.`,
+`Nosso contato, nossa conexão, foi incrível.`,
+`Começamos a ter mais intimidade, e eu realmente queria ter aproveitado isso de forma leve, sem pressa.`,
+`Mas você ficou insegura em liberar tudo de uma vez, e talvez isso tenha nos impedido de viver experiências mais leves e prazerosas, inclusive na intimidade sexual.`,
+`Eu acredito que poderíamos ter tido momentos leves e bons, se a intimidade tivesse se desenvolvido naturalmente.`,
+`Esse choque me fez perceber que não podemos seguir como antes.`
+],
+[
+`Agora quero deixar claro algo importante:`,
+`Eu não vou iniciar nenhuma conversa daqui pra frente, principalmente por mensagem.`,
+`Se você quiser realmente que a gente tenha alguma chance, você sabe os horários que estarei em casa — você que venha.`,
+`Se não vier, vou entender que também não quer mais, e seguirei meu caminho.`,
+`Não vou mandar mensagens, não vou pressionar.`,
+`Essa é a forma que encontrei de preservar meu espaço e seguir em paz.`
+]
 ];
 
-const el = document.getElementById('message');
+const messageDiv = document.getElementById('message');
+const continueBtn = document.getElementById('continueBtn');
 const sig = document.getElementById('signature');
-const btn = document.getElementById('continueBtn');
 
-let currentPartIndex = 0;
+let partIndex = 0;
 
-function typeWriter(part, callback){
+function showParagraphs(paragraphs, callback){
+  messageDiv.innerHTML = '';
   let idx = 0;
-  el.innerHTML='';
-  el.style.opacity=1;
-  function type(){
-    if(idx<part.length){
-      el.innerHTML=part.slice(0,idx+1)+'<span class="cursor"></span>';
-      let delay = 28;
-      const ch=part[idx];
-      if(ch===',') delay=90;
-      if(ch==='.') delay=220;
-      if(ch==='\n') delay=160;
+  function showNext(){
+    if(idx < paragraphs.length){
+      const p = document.createElement('p');
+      p.className = 'fadePara';
+      p.textContent = paragraphs[idx];
+      messageDiv.appendChild(p);
+      setTimeout(()=>{p.classList.add('show');}, 50);
       idx++;
-      setTimeout(type,delay);
-    } else{
-      el.innerHTML=part;
-      if(callback) callback();
+      setTimeout(showNext, 500 + paragraphs[idx-1].length*20);
+    } else if(callback){
+      callback();
     }
   }
-  type();
+  showNext();
 }
 
-// inicia primeira parte
-window.onload = ()=>{
-  typeWriter(parts[0], ()=>{btn.style.display='block';});
+window.onload = () => {
+  showParagraphs(parts[partIndex], ()=>{continueBtn.style.display='block';});
 }
 
-btn.addEventListener('click', ()=>{
-  btn.style.display='none';
-  currentPartIndex++;
-  if(currentPartIndex<parts.length-1){
-    typeWriter(parts[currentPartIndex], ()=>{btn.style.display='block';});
-  } else {
-    // última parte
-    typeWriter(parts[currentPartIndex], ()=>{sig.classList.add('show');});
+continueBtn.addEventListener('click', ()=>{
+  continueBtn.style.display='none';
+  partIndex++;
+  if(partIndex < parts.length){
+    showParagraphs(parts[partIndex], ()=>{
+      if(partIndex < parts.length-1){
+        continueBtn.style.display='block';
+      } else {
+        sig.classList.add('show');
+      }
+    });
   }
 });
 </script>
