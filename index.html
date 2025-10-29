@@ -10,31 +10,35 @@ body,html{
   font-family:'Poppins',sans-serif;
   background: url('https://lirp.cdn-website.com/46e9b5ee/dms3rep/multi/opt/20230416_085110970_iOS-1920w.jpg') no-repeat center center fixed;
   background-size: cover;
-  display:flex; justify-content:center; align-items:center;
   color:#fff;
-  overflow:hidden;
+  overflow-y:auto; /* permite rolar no celular */
+  scroll-behavior: smooth;
 }
 .overlay{
-  position:absolute; inset:0;
+  position:fixed; inset:0;
   background: rgba(0,0,0,0.45);
   backdrop-filter: blur(2px);
+  z-index:0;
 }
 .container{
-  position:relative; z-index:1;
+  position:relative;
+  z-index:1;
   max-width:800px;
-  padding:40px;
+  margin:60px auto;
+  padding:40px 25px;
   background: rgba(0,0,0,0.35);
   border-radius:15px;
   text-align:center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
 }
 h1{
-  font-size:2.4em;
+  font-size:2.3em;
   margin-bottom:30px;
   color:#ffdca3;
   text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
 }
 #message{
-  font-size:1.3em;
+  font-size:1.25em;
   line-height:1.6;
   white-space: pre-wrap;
   text-align:left;
