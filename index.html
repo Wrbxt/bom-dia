@@ -1,151 +1,75 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Carta — Encerramento</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carta de Desabafo</title>
 <style>
-  :root{
-    --glass: rgba(0,0,0,0.36);
-    --accent: #ffdca3;
-    --text: #fff;
-    --muted: #dfeaf7;
-  }
-  *{box-sizing:border-box}
-  html,body{
-    height:100%;
+  body, html{
     margin:0;
-    font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    padding:0;
+    height:100%;
+    font-family: 'Poppins', sans-serif;
     background: url('https://lirp.cdn-website.com/46e9b5ee/dms3rep/multi/opt/20230416_085110970_iOS-1920w.jpg') no-repeat center center fixed;
     background-size: cover;
-    color:var(--text);
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
+    color: #fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
   }
 
-  /* overlay */
   .overlay{
-    position:fixed;
+    position:absolute;
     inset:0;
-    background: linear-gradient(180deg, rgba(5,10,20,0.46), rgba(0,0,0,0.55));
+    background: rgba(0,0,0,0.45);
     z-index:0;
   }
 
-  .wrap{
+  .container{
     position:relative;
-    z-index:2;
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:32px;
+    z-index:1;
+    max-width:800px;
+    padding:30px;
+    background: rgba(0,0,0,0.3);
+    border-radius:12px;
   }
 
-  .card{
-    width:min(920px, 94%);
-    background: linear-gradient(180deg, rgba(0,0,0,0.28), rgba(255,255,255,0.02));
-    border-radius:14px;
-    padding:28px;
-    box-shadow: 0 20px 60px rgba(3,6,12,0.6);
-    backdrop-filter: blur(6px) saturate(1.05);
-    border: 1px solid rgba(255,255,255,0.04);
-  }
-
-  .title{
-    font-size: clamp(20px, 3vw, 28px);
-    color: var(--accent);
-    margin: 0 0 10px 0;
-    letter-spacing: 0.2px;
-  }
-
-  .subtitle{
-    color: var(--muted);
-    margin: 0 0 18px 0;
-    font-size: clamp(13px, 1.5vw, 16px);
-  }
-
-  .message {
-    min-height:260px;
-    font-size: clamp(16px, 1.6vw, 18px);
-    line-height:1.55;
-    color: #fbfbfb;
-    white-space:pre-wrap;
-    overflow-wrap:break-word;
-    transition: transform .28s ease, opacity .28s ease;
-    opacity:0;
-    transform: translateY(6px) scale(0.998);
-  }
-
-  .message.show{
-    opacity:1;
-    transform:none;
+  #message{
+    font-size:1.3em;
+    line-height:1.5;
+    white-space: pre-wrap;
   }
 
   .cursor{
     display:inline-block;
     width:3px;
-    height:1.1em;
-    background: #fff;
+    height:1.2em;
+    background:#fff;
     vertical-align:bottom;
-    margin-left:6px;
-    animation: blink .8s steps(1) infinite;
+    margin-left:3px;
+    animation: blink 0.8s steps(1) infinite;
   }
+
   @keyframes blink{50%{opacity:0}}
 
   .signature{
-    margin-top:18px;
+    margin-top:20px;
     text-align:right;
     font-weight:600;
-    color: #ffdca3;
-    font-size: 0.98rem;
-  }
-
-  /* small footer */
-  .footer{
-    margin-top:16px;
-    display:flex;
-    gap:10px;
-    align-items:center;
-    justify-content:space-between;
-    color:rgba(255,255,255,0.6);
-    font-size:13px;
-  }
-
-  .meta {
-    opacity:0.9;
-  }
-
-  /* responsive */
-  @media (max-width:520px){
-    .card{ padding:18px; }
-    .message{ min-height:220px; font-size:15px }
+    color:#ffdca3;
   }
 </style>
 </head>
 <body>
-  <div class="overlay" aria-hidden="true"></div>
-
-  <main class="wrap" role="main">
-    <article class="card" aria-live="polite">
-      <h1 class="title">Carta de encerramento</h1>
-      <div class="subtitle">Uma palavra sincera para encerrar com respeito — sem volta, sem amizade forçada.</div>
-
-      <div id="message" class="message" aria-atomic="true" aria-live="assertive"></div>
-
-      <div class="signature" id="signature" style="display:none">
-        — Felipe Silva Mota
-      </div>
-
-      <div class="footer" aria-hidden="true">
-        <div class="meta">Mensagem enviada</div>
-        <div style="opacity:.7;font-size:13px">Se cuida.</div>
-      </div>
-    </article>
-  </main>
+<div class="overlay"></div>
+<div class="container">
+  <div id="message"></div>
+  <div class="signature" id="signature" style="display:none">
+    — Felipe Silva Mota
+  </div>
+</div>
 
 <script>
-/* Texto final: carta reflexiva, madura e clara.
-   Aparece com efeito de digitação. */
 const text = `Eu não queria que isso terminasse assim. Juro que não.  
 Desde o começo eu deixei claro o meu jeito: sou 8 ou 80 — quando me entrego, me entrego de verdade. Eu tentei ser inteiro com você, me dedicar, notar os detalhes, acompanhar.  
 
@@ -166,30 +90,23 @@ const el = document.getElementById('message');
 const sig = document.getElementById('signature');
 let i = 0;
 
-function typeWriter(){
+function typeText(){
   if(i < text.length){
-    // Ativa aria update
-    el.innerHTML = text.slice(0, i+1) + '<span class="cursor" aria-hidden="true"></span>';
+    el.innerHTML = text.slice(0,i+1) + '<span class="cursor"></span>';
     i++;
-    // ajusta velocidade: pequenas pausas em vírgulas e pontos
     let delay = 28;
     const ch = text[i-1];
     if(ch === ',' ) delay = 90;
-    if(ch === '.' ) delay = 240;
+    if(ch === '.' ) delay = 220;
     if(ch === '\n') delay = 160;
-    setTimeout(typeWriter, delay);
+    setTimeout(typeText, delay);
   } else {
-    // final
     el.textContent = text;
-    el.classList.add('show');
-    sig.style.display = 'block';
+    sig.style.display='block';
   }
 }
 
-window.addEventListener('load', () => {
-  // iniciar digitação suave com pequena pausa para efeito
-  setTimeout(typeWriter, 500);
-});
+window.addEventListener('load', ()=>{ typeText(); });
 </script>
 </body>
 </html>
