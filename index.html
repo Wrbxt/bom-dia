@@ -36,11 +36,11 @@
     font-size: 1.2rem;
     line-height: 1.8;
     max-width: 700px;
-    animation: fadeInText 3s ease-in-out;
     background: rgba(255, 255, 255, 0.03);
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(255, 77, 109, 0.4);
+    animation: fadeInText 1s ease-in-out;
   }
 
   @keyframes fadeInText {
@@ -48,7 +48,7 @@
     to {opacity: 1; transform: translateY(0);}
   }
 
-  .buttons {
+  .buttons, .back-button {
     margin-top: 40px;
     display: flex;
     gap: 20px;
@@ -74,41 +74,56 @@
     transform: scale(1.1) rotate(-2deg);
     box-shadow: 0 0 25px #ff3860, 0 0 50px #ff1f4a;
   }
-
-  .emoji {
-    display: inline-block;
-    animation: bounce 1.5s infinite;
-  }
-
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
 </style>
 </head>
 <body>
 
   <h1>Pra minha Baixinha 💋🔥</h1>
 
-  <p>
-    Baixinha… cada vez que penso em você, sinto um fogo que não dá pra apagar 😈🔥.  
-    O jeito que você me olha, como se já soubesse o que vai acontecer, me deixa arrepiado só de lembrar.  
-    <br><br>
-    É aquela mistura de saudade e provocação… um jogo que só a gente entende.  
-    Cada risada sua, cada suspiro, cada toque… me deixa querendo explorar cada pedacinho desse nosso mundo secreto. 💫  
-    <br><br>
-    Da próxima vez, quero te sentir de perto, sentir a tensão, brincar com cada provocação sua, e ver até onde essa química nos leva…  
-    Mas, claro, sem pressa, deixando cada momento se incendiar naturalmente 🔥😈.  
-    <br><br>
-    Só de imaginar você, já sinto meu coração disparar e um sorriso bobo se formar…  
-    e te prometo: quando acontecer de novo, vai ser inesquecível, daqueles momentos que a gente guarda na memória e no coração 💋❤️.
-  </p>
-
-  <div class="buttons">
-    <button>Me provoca de novo 😈🔥</button>
-    <button>Quero sentir você 💋</button>
-    <button>Vem brincar comigo 😏</button>
+  <div id="menu">
+    <p>
+      Escolhe uma mensagem, minha baixinha… cada uma vai te deixar com aquele sorriso bobo 😈💖
+    </p>
+    <div class="buttons">
+      <button onclick="showMessage(1)">Me provoca de novo 😈🔥</button>
+      <button onclick="showMessage(2)">Quero sentir você 💋</button>
+      <button onclick="showMessage(3)">Vem brincar comigo 😏</button>
+    </div>
   </div>
+
+  <div id="message" style="display:none;">
+    <p id="messageText"></p>
+    <div class="back-button">
+      <button onclick="backToMenu()">🔙 Voltar ao menu</button>
+    </div>
+  </div>
+
+<script>
+  const messages = {
+    1: `Baixinha… cada vez que penso em você, sinto um fogo que não dá pra apagar 😈🔥.
+O jeito que você me olha, como se já soubesse o que vai acontecer, me deixa arrepiado só de lembrar.
+Cada risada sua, cada suspiro, cada provocação… me deixa querendo explorar cada pedacinho do nosso mundo secreto.`,
+
+    2: `Só de imaginar você perto de mim, meu coração dispara 💓💋.
+Quero sentir cada toque seu, cada olhadinha intensa, e deixar a tensão crescer até explodir 🔥.
+A gente sabe brincar com o que sente, e eu tô louco pra viver cada segundo dessa química louca.`,
+
+    3: `Minha baixinha… quando você decide brincar comigo 😏, tudo ao redor desaparece.
+É aquele jogo de provocação, suspiros e risadas que me deixam sem chão.
+Da próxima vez, quero que a gente vá além, descobrindo até onde essa conexão pode nos levar 💖🔥.`
+  };
+
+  function showMessage(num) {
+    document.getElementById('menu').style.display = 'none';
+    document.getElementById('messageText').innerText = messages[num];
+    document.getElementById('message').style.display = 'block';
+  }
+
+  function backToMenu() {
+    document.getElementById('message').style.display = 'none';
+    document.getElementById('menu').style.display = 'block';
+  }
+</script>
 
 </body>
 </html>
