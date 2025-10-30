@@ -5,74 +5,66 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Carta do Dia 💌</title>
 <style>
-  * { box-sizing: border-box; margin:0; padding:0; }
-  html, body { height: 100%; font-family: 'Poppins', sans-serif; }
-  body {
-    display:flex; align-items:center; justify-content:center;
-    background: linear-gradient(135deg, #ffe0e9, #ffd6d6, #ffe8d6);
-    background-size: 400% 400%;
-    animation: gradientMove 20s ease infinite;
-    overflow:hidden;
-  }
-  @keyframes gradientMove { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;font-family:'Poppins',sans-serif;}
+body{display:flex;align-items:center;justify-content:center;
+background:linear-gradient(135deg,#ffe0e9,#ffd6d6,#ffe8d6);
+background-size:400% 400%;animation:gradientMove 20s ease infinite;overflow:hidden;}
 
-  .hearts{position:fixed; inset:0; z-index:0; pointer-events:none;}
-  .hearts span{position:absolute; font-size:20px; opacity:0.9; animation: floatUp linear infinite;}
-  @keyframes floatUp { 0%{transform:translateY(100vh) rotate(0) scale(.5); opacity:0;} 20%{opacity:1;} 100%{transform:translateY(-20vh) rotate(360deg) scale(1.2); opacity:0;} }
+@keyframes gradientMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
-  .wrap { position: relative; width:90vw; max-width:950px; height:80vh; z-index:2; }
-  .envelope { width:100%; height:100%; perspective:1500px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
-  .shell { position:absolute; inset:0; border-radius:18px; background: linear-gradient(180deg,#ffc1d1,#ffb3c4,#ffa1b5); box-shadow:0 25px 60px rgba(0,0,0,0.12); transform-style: preserve-3d; transition: transform 1s cubic-bezier(.2,.8,.2,1); }
+.hearts{position:fixed;inset:0;z-index:0;pointer-events:none;}
+.hearts span{position:absolute;font-size:20px;opacity:0.9;animation:floatUp linear infinite;}
+@keyframes floatUp{0%{transform:translateY(100vh) rotate(0) scale(.5);opacity:0;}20%{opacity:1;}100%{transform:translateY(-20vh) rotate(360deg) scale(1.2);opacity:0;}}
 
-  .flap { position:absolute; top:0; left:0; width:100%; height:50%; background: linear-gradient(180deg,#ff7fa1,#ff5f86); clip-path: polygon(0 0,100% 0,50% 100%); transform-origin: top center; transform: rotateX(0deg); transition: transform 1s cubic-bezier(.2,.8,.2,1); z-index:4; box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
-  .envelope.open .flap { transform: rotateX(180deg) translateZ(2px); }
+.wrap{position:relative;width:90vw;max-width:950px;height:80vh;z-index:2;}
+.envelope{width:100%;height:100%;perspective:1500px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.shell{position:absolute;inset:0;border-radius:18px;background:linear-gradient(180deg,#ffc1d1,#ffb3c4,#ffa1b5);box-shadow:0 25px 60px rgba(0,0,0,0.12);transform-style:preserve-3d;transition:transform 1s cubic-bezier(.2,.8,.2,1);}
+.flap{position:absolute;top:0;left:0;width:100%;height:50%;background:linear-gradient(180deg,#ff7fa1,#ff5f86);clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top center;transform:rotateX(0deg);transition:transform 1s cubic-bezier(.2,.8,.2,1);z-index:4;box-shadow:0 15px 35px rgba(0,0,0,0.15);}
+.envelope.open .flap{transform:rotateX(180deg) translateZ(2px) rotateY(3deg) rotateX(3deg);}
 
-  .paper { position:absolute; left:5%; right:5%; bottom:5%; height:0%; border-radius:12px; background:#fffefc; box-shadow:0 12px 40px rgba(0,0,0,0.08); overflow:auto; transition: height 1s cubic-bezier(.2,.8,.2,1); padding:0 30px; }
-  .envelope.open .paper { height:88%; }
+.paper{position:absolute;left:5%;right:5%;bottom:5%;height:0%;border-radius:12px;background:#fffefc;box-shadow:0 12px 40px rgba(0,0,0,0.08);overflow:auto;transition:height 1s cubic-bezier(.2,.8,.2,1);padding:0 30px;}
+.envelope.open .paper{height:88%;transition:height 1.2s cubic-bezier(.2,.8,.2,1);}
 
-  .paper-inner { opacity:0; transform: translateY(20px); transition: opacity 1s ease 0.5s, transform 1s ease 0.5s; padding:40px 10px; }
-  .envelope.open .paper-inner { opacity:1; transform: translateY(0); }
+.paper-inner{opacity:0;transform:translateY(20px);transition:opacity 1s ease 0.5s, transform 1s ease 0.5s;padding:40px 10px;}
+.envelope.open .paper-inner{opacity:1;transform:translateY(0);}
 
-  .paper h1 { text-align:center; color:#ff4b8b; font-size:2rem; margin-bottom:20px; }
-  .paper p { font-size:1.3rem; line-height:2rem; color:#4a1030; text-align:left; white-space:pre-line; }
+.paper h1{text-align:center;color:#ff4b8b;font-size:2rem;margin-bottom:20px;}
+.paper p{font-size:1.3rem;line-height:2rem;color:#4a1030;text-align:left;white-space:pre-line;}
 
-  .btn-open { position:absolute; z-index:6; background:linear-gradient(180deg,#ff4b8b,#ff6fa6); color:#fff; border:none; border-radius:999px; padding:18px 40px; font-size:1.3rem; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; animation: pulseBtn 2s ease-in-out infinite; transition: transform 0.3s, opacity 0.3s; }
-  .btn-open span { font-size:1.3rem; margin-right:10px; }
-  @keyframes pulseBtn { 0%{transform:scale(1)} 50%{transform:scale(1.05)} 100%{transform:scale(1)} }
-  .envelope.open .btn-open { opacity:0; transform:translateY(30px) scale(.96); pointer-events:none; }
+.btn-open{position:absolute;z-index:6;background:linear-gradient(180deg,#ff4b8b,#ff6fa6);color:#fff;border:none;border-radius:999px;padding:18px 40px;font-size:1.3rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;animation:pulseBtn 2s ease-in-out infinite;transition:transform 0.3s, opacity 0.3s;}
+.btn-open span{font-size:1.3rem;margin-right:10px;}
+@keyframes pulseBtn{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
+.envelope.open .btn-open{opacity:0;transform:translateY(30px) scale(.96);pointer-events:none;}
 
-  .credit { position:absolute; bottom:12px; right:12px; font-size:0.85rem; color:rgba(59,16,48,0.5); }
+.credit{position:absolute;bottom:12px;right:12px;font-size:0.85rem;color:rgba(59,16,48,0.5);}
 
-  @media(max-width:520px){ .paper p{font-size:1.1rem; line-height:1.6rem;} .btn-open{padding:14px 28px; font-size:1.1rem;} }
-
+@media(max-width:520px){.paper p{font-size:1.1rem;line-height:1.6rem;}.btn-open{padding:14px 28px;font-size:1.1rem;}}
 </style>
 </head>
 <body>
-
 <div class="hearts" id="hearts"></div>
-
 <div class="wrap">
-  <div class="envelope" id="envelope" tabindex="0">
-    <div class="shell"></div>
-    <div class="flap"></div>
-    <div class="paper" id="paper">
-      <div class="paper-inner" id="paperInner">
-        <h1>💌 Mensagem do Dia</h1>
-        <p id="mensagemText"></p>
-      </div>
-    </div>
-    <button class="btn-open" id="openBtn"><span>💞</span>Abrir Carta</button>
-  </div>
+<div class="envelope" id="envelope" tabindex="0">
+<div class="shell"></div>
+<div class="flap"></div>
+<div class="paper" id="paper">
+<div class="paper-inner" id="paperInner">
+<h1>💌 Mensagem do Dia</h1>
+<p id="mensagemText"></p>
 </div>
-
+</div>
+<button class="btn-open" id="openBtn"><span>💞</span>Abrir Carta</button>
+</div>
+</div>
 <div class="credit">Com carinho — Felipe</div>
 
 <script>
 (function makeHearts(){
-  const container = document.getElementById('hearts');
-  for(let i=0;i<20;i++){
+  const container=document.getElementById('hearts');
+  for(let i=0;i<25;i++){
     let s=document.createElement('span');
-    s.textContent=['💖','💗','💕','💘'][Math.floor(Math.random()*4)];
+    s.textContent=['💖','💗','💕','💘','💞'][Math.floor(Math.random()*5)];
     s.style.left=(Math.random()*100).toFixed(2)+'vw';
     s.style.animationDuration=(6+Math.random()*8)+'s';
     s.style.fontSize=(18+Math.random()*28)+'px';
@@ -81,7 +73,7 @@
   }
 })();
 
-const mensagens = [
+const mensagens=[
 "Bom dia, minha baixinha! 🌸 Que hoje seu coração acorde leve, cheio de alegria e confiança. Cada passo que você dá constrói um caminho lindo e único. Sorria para o mundo e deixe que ele sorria de volta para você. Confie na sua força e intuição, você merece tudo de bom!",
 "Que hoje você encontre beleza nos pequenos detalhes, minha querida. ✨ Cada gesto simples pode ser mágico. Respire fundo, sinta o ar, escute as risadas ao redor e perceba como a vida tem momentos incríveis. Sua luz ilumina todos — nunca se esqueça disso.",
 "Acorde com o coração tranquilo e confiante, baixinha. 💖 Hoje é um dia perfeito para acreditar em você, nos seus talentos e capacidade de transformar sonhos em realidade. Cada desafio é oportunidade para crescer. Que seu dia seja cheio de sorrisos e abraços inesperados.",
@@ -106,28 +98,23 @@ const mensagens = [
 "Bom dia! ☀️ Que a confiança e a leveza te acompanhem. Cada desafio é oportunidade de crescimento. Sorria, respire fundo e saiba que você é incrível.",
 "Que sua manhã seja cheia de boas energias. 💖 Permita-se sentir alegria, gratidão e motivação. Você tem força e brilho para enfrentar qualquer situação.",
 "Minha baixinha, que cada instante hoje seja especial. 🌸 Celebre a vida, suas conquistas e a pessoa maravilhosa que você é. Confie no seu potencial.",
-"Bom dia! 💕 Que a serenidade e o amor próprio estejam presentes. Cada passo seu é importante, cada sorriso transforma o dia. Aproveite cada momento.",
+"Bom dia! 💕 Que a serenidade e o amor próprio estejam presentes. Cada passo seu é importante, cada sorriso transforma o dia. Aproveite cada momento com carinho.",
 "Que hoje você encontre inspiração em tudo ao seu redor. 🌷 Respire fundo, sinta gratidão e siga com confiança. Você é incrível e cheia de luz.",
 "Acorde cheia de energia, minha baixinha! 💖 Que a alegria e o amor te acompanhem. Cada pequeno gesto pode fazer a diferença. Confie em você mesma.",
 "Minha querida, que a motivação e a felicidade guiem seu dia. 🌸 Cada conquista merece celebração. Lembre-se: você é especial e amada.",
 "Bom dia! ☀️ Que seu coração esteja leve e sua mente tranquila. 💕 Cada instante do dia pode ser cheio de aprendizado e alegria. Aproveite tudo com carinho."
 ];
 
-const today = new Date();
-const startDate = new Date(2025,9,30); // 30/10/2025
-const daysDiff = Math.floor((today-startDate)/(24*60*60*1000));
-const index = ((daysDiff % mensagens.length) + mensagens.length) % mensagens.length;
-document.getElementById('mensagemText').textContent = mensagens[index];
+const today=new Date();
+const startDate=new Date(2025,9,30);
+const daysDiff=Math.floor((today-startDate)/(24*60*60*1000));
+const index=((daysDiff%mensagens.length)+mensagens.length)%mensagens.length;
+document.getElementById('mensagemText').textContent=mensagens[index];
 
-const envelope = document.getElementById('envelope');
-const openBtn = document.getElementById('openBtn');
-openBtn.addEventListener('click', e=>{
-  e.stopPropagation();
-  envelope.classList.add('open');
-});
-envelope.addEventListener('click', ()=>{
-  envelope.classList.add('open');
-});
+const envelope=document.getElementById('envelope');
+const openBtn=document.getElementById('openBtn');
+openBtn.addEventListener('click',e=>{e.stopPropagation();envelope.classList.add('open');});
+envelope.addEventListener('click',()=>{envelope.classList.add('open');});
 </script>
 </body>
 </html>
