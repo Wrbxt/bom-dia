@@ -14,10 +14,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    padding: 30px;
+    justify-content: center;
+    padding: 20px;
+    margin: 0;
     min-height: 100vh;
     text-align: center;
+    overflow-x: hidden;
   }
 
   h1 {
@@ -33,14 +35,15 @@
   }
 
   p {
-    font-size: 1.2rem;
-    line-height: 1.8;
-    max-width: 700px;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    max-width: 90%;
     background: rgba(255, 255, 255, 0.03);
-    padding: 20px;
+    padding: 18px;
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(255, 77, 109, 0.4);
     animation: fadeInText 1s ease-in-out;
+    word-wrap: break-word;
   }
 
   @keyframes fadeInText {
@@ -49,9 +52,9 @@
   }
 
   .buttons, .back-button {
-    margin-top: 30px;
+    margin-top: 25px;
     display: flex;
-    gap: 20px;
+    gap: 15px;
     flex-wrap: wrap;
     justify-content: center;
   }
@@ -64,46 +67,68 @@
     font-size: 1.1rem;
     border-radius: 14px;
     cursor: pointer;
-    transition: 0.4s;
+    transition: 0.3s;
     box-shadow: 0 0 10px #ff3860;
     font-weight: 600;
   }
 
   button:hover {
     background-color: #ff1f4a;
-    transform: scale(1.1) rotate(-2deg);
-    box-shadow: 0 0 25px #ff3860, 0 0 50px #ff1f4a;
+    transform: scale(1.1) rotate(-1deg);
+    box-shadow: 0 0 20px #ff3860, 0 0 40px #ff1f4a;
   }
 
-  #message {
+  /* Botão inicial grande provocante */
+  #startButton {
+    font-size: 1.5rem;
+    padding: 24px 40px;
+    border-radius: 20px;
+    animation: pulse 1.5s infinite;
+    box-shadow: 0 0 20px #ff3860, 0 0 40px #ff1f4a;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 20px #ff3860, 0 0 40px #ff1f4a; }
+    50% { transform: scale(1.08); box-shadow: 0 0 30px #ff3860, 0 0 50px #ff1f4a; }
+    100% { transform: scale(1); box-shadow: 0 0 20px #ff3860, 0 0 40px #ff1f4a; }
+  }
+
+  #menu, #message {
     display: none;
+    width: 100%;
+  }
+
+  html, body {
+    overflow-y: auto;
   }
 </style>
 </head>
 <body>
 
-  <h1>Pra minha Baixinha 💋🔥</h1>
+  <!-- Botão inicial provocante -->
+  <div id="startScreen">
+    <button id="startButton" onclick="startMenu()">Clique aqui se quiser sentir o calor 😈🔥💋</button>
+  </div>
 
-  <!-- Mensagem principal sempre visível -->
-  <p id="mainMessage">
-    Eu não sei explicar o que acontece quando a gente se encontra, Baixinha…  
-    é como se o mundo ficasse em silêncio e só a gente existisse.  
-    O jeito que você olha, o sorriso de canto, aquela risadinha... tudo me desarma.  
-    <br><br>
-    Hoje, mais do que nunca, eu percebi o quanto essa conexão nossa é intensa.  
-    A gente se entende num olhar, numa provocada, num toque que fala mais do que mil palavras.  
-    E é impossível negar: tem algo em você que me puxa, me instiga e me faz querer mais.  
-    <br><br>
-    Da próxima vez, quero que a gente vá além.  
-    Quero ver até onde essa química pode levar a gente —  
-    mas sem pressa, só deixando o clima falar por si.  
-    <br><br>
-    Só de lembrar de hoje, já fico com aquele sorriso bobo, imaginando o que ainda vem por aí...  
-    e te prometo uma coisa: quando acontecer de novo, vai ser daquelas lembranças que marcam.
-  </p>
-
-  <!-- Menu de botões -->
+  <!-- Menu com carta principal e botões -->
   <div id="menu">
+    <h1>Pra minha Baixinha 💋🔥</h1>
+    <p id="mainMessage">
+      Eu não sei explicar o que acontece quando a gente se encontra, Baixinha…  
+      é como se o mundo ficasse em silêncio e só a gente existisse.  
+      O jeito que você olha, o sorriso de canto, aquela risadinha... tudo me desarma.  
+      <br><br>
+      Hoje, mais do que nunca, eu percebi o quanto essa conexão nossa é intensa.  
+      A gente se entende num olhar, numa provocada, num toque que fala mais do que mil palavras.  
+      E é impossível negar: tem algo em você que me puxa, me instiga e me faz querer mais.  
+      <br><br>
+      Da próxima vez, quero que a gente vá além.  
+      Quero ver até onde essa química pode levar a gente —  
+      mas sem pressa, só deixando o clima falar por si.  
+      <br><br>
+      Só de lembrar de hoje, já fico com aquele sorriso bobo, imaginando o que ainda vem por aí...  
+      e te prometo uma coisa: quando acontecer de novo, vai ser daquelas lembranças que marcam.
+    </p>
     <div class="buttons">
       <button onclick="showMessage(1)">Me provoca de novo 😈🔥</button>
       <button onclick="showMessage(2)">Quero sentir você 💋</button>
@@ -111,7 +136,7 @@
     </div>
   </div>
 
-  <!-- Mensagem dos botões -->
+  <!-- Mensagens dos botões -->
   <div id="message">
     <p id="messageText"></p>
     <div class="back-button">
@@ -120,27 +145,34 @@
   </div>
 
 <script>
-  // Mensagens totalmente novas e diferentes da carta principal
   const messages = {
-    1: `Meu fogo, hoje eu fico imaginando cada olhar seu, cada risadinha provocante 😈🔥.  
-Quero sentir você me testando, me desafiando e, no final, a gente rindo juntos da tensão que criamos.`,
+    1: `Meu fogo, cada vez que você me provoca 😈🔥, sinto meu corpo inteiro reagir.  
+Quero sentir sua risadinha travessa e aquele olhar que só você sabe dar, me tirando do sério e me deixando com vontade de mais.`,
 
-    2: `Baixinha, só de pensar no toque da sua mão meu corpo inteiro reage 💓💋.  
-É uma mistura de desejo e carinho, e eu mal posso esperar pra sentir de novo o calor da nossa conexão.`,
+    2: `Baixinha, só de imaginar sua mão na minha 💓💋, meu coração dispara.  
+Quero sentir sua presença, a química que só a gente entende, e deixar cada segundo se incendiar 🔥.`,
 
-    3: `Quando você vem com esse jeito travesso 😏, minha mente não para de criar cenários quentes.  
-Cada momento com você é um jogo de provocações, e eu quero explorar cada segundo dessa nossa química 💖🔥.`
+    3: `Quando você resolve brincar comigo 😏, tudo ao redor desaparece.  
+Cada provocação sua me deixa sem chão, e eu quero explorar cada instante dessa nossa conexão intensa 💖🔥.`
   };
+
+  function startMenu() {
+    document.getElementById('startScreen').style.display = 'none';
+    document.getElementById('menu').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
   function showMessage(num) {
     document.getElementById('menu').style.display = 'none';
     document.getElementById('messageText').innerHTML = messages[num];
     document.getElementById('message').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function backToMenu() {
     document.getElementById('message').style.display = 'none';
     document.getElementById('menu').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 </script>
 
