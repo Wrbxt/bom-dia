@@ -1,423 +1,195 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Carta do Dia — Pra minha Baixinha 💌</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carta do Dia 💌</title>
 <style>
-  /* ===== Reset e base ===== */
-  :root{
-    --bg1:#fddde6;
-    --bg2:#ffe8d6;
-    --accent:#ff6fa6;
-    --accent-2:#ff9eb3;
-    --paper:#fffefc;
-    --text:#3b1030;
-    --shadow: rgba(107,17,68,0.12);
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%;margin:0;font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
-  body{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background: linear-gradient(120deg, var(--bg1), var(--bg2));
+  /* ===== Base e reset ===== */
+  * { box-sizing: border-box; margin:0; padding:0; }
+  html, body { height: 100%; font-family: 'Poppins', sans-serif; }
+  body {
+    display:flex; align-items:center; justify-content:center;
+    background: linear-gradient(135deg, #ffe0e9, #ffd6d6, #ffe8d6);
     background-size: 400% 400%;
-    animation: bgMove 18s ease-in-out infinite;
-    color:var(--text);
+    animation: gradientMove 20s ease infinite;
     overflow:hidden;
   }
-  @keyframes bgMove {
+  @keyframes gradientMove {
     0%{background-position:0% 50%}
     50%{background-position:100% 50%}
     100%{background-position:0% 50%}
   }
 
-  /* ===== Corações flutuantes (fundo) ===== */
-  .hearts{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    z-index:0;
-    overflow:hidden;
-  }
+  /* ===== Corações flutuantes ===== */
+  .hearts{position:fixed; inset:0; z-index:0; pointer-events:none;}
   .hearts span{
-    position:absolute;
-    font-size:18px;
-    opacity:0.95;
-    filter:drop-shadow(0 6px 12px rgba(0,0,0,0.08));
+    position:absolute; font-size:20px; opacity:0.9;
     animation: floatUp linear infinite;
-    transform-origin:center;
   }
   @keyframes floatUp {
-    0%{transform:translateY(110vh) rotate(0) scale(.6); opacity:0}
-    10%{opacity:1}
-    100%{transform:translateY(-20vh) rotate(360deg) scale(1.2); opacity:0}
+    0%{transform:translateY(100vh) rotate(0) scale(.5); opacity:0;}
+    20%{opacity:1;}
+    100%{transform:translateY(-20vh) rotate(360deg) scale(1.2); opacity:0;}
   }
 
-  /* ===== Envelope (full-screen feeling, central) ===== */
-  .wrap {
-    position: relative;
-    width: min(980px, 94vw);
-    height: min(820px, 86vh);
-    z-index:2;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
-
+  /* ===== Envelope ===== */
+  .wrap { position: relative; width:90vw; max-width:950px; height:80vh; z-index:2; }
   .envelope {
-    position: relative;
-    width:100%;
-    height:100%;
-    border-radius:18px;
-    perspective:1400px; /* para 3D realista */
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    box-shadow: 0 20px 60px var(--shadow);
-    transform-style:preserve-3d;
-    overflow:visible;
-    cursor:pointer;
+    width:100%; height:100%;
+    perspective:1500px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  }
+  .shell { position:absolute; inset:0; border-radius:18px;
+    background: linear-gradient(180deg,#ffc1d1,#ffb3c4,#ffa1b5);
+    box-shadow:0 25px 60px rgba(0,0,0,0.12);
+    transform-style: preserve-3d; transition: transform 1s cubic-bezier(.2,.8,.2,1);
   }
 
-  /* corpo do envelope (bordas externas) */
-  .shell {
-    position:absolute;
-    inset:0;
-    border-radius:18px;
-    background: linear-gradient(180deg, #ffd6e8 0%, #ffc8dd 50%, #ffb1cf 100%);
-    box-shadow: inset 0 2px 12px rgba(255,255,255,0.25), 0 10px 40px rgba(0,0,0,0.08);
-    transform:translateZ(-30px) scale(0.995);
-  }
-
-  /* aba (flap) que fecha a carta: vamos animar rotateX para "dobrar pra trás" */
+  /* Aba (flap) */
   .flap {
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:52%;
-    border-top-left-radius:18px;
-    border-top-right-radius:18px;
-    background: linear-gradient(180deg, #ff8fb6 0%, #ff7aa3 100%);
-    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    position:absolute; top:0; left:0; width:100%; height:50%;
+    background: linear-gradient(180deg,#ff7fa1,#ff5f86);
+    clip-path: polygon(0 0,100% 0,50% 100%);
     transform-origin: top center;
     transform: rotateX(0deg);
-    transition: transform 900ms cubic-bezier(.2,.95,.2,1);
+    transition: transform 1s cubic-bezier(.2,.8,.2,1);
     z-index:4;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-    backface-visibility:hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
   }
 
-  /* detalhe interno da aba (sombra interna) */
-  .flap::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:linear-gradient(180deg, rgba(255,255,255,0.045), rgba(0,0,0,0.06));
-    border-radius:inherit;
-    mix-blend-mode:soft-light;
-  }
+  .envelope.open .flap { transform: rotateX(180deg) translateZ(2px); }
 
-  /* papel interno: começa escondido (height:0) e sobe ao abrir */
+  /* Papel interno */
   .paper {
-    position:absolute;
-    left:6%;
-    right:6%;
-    bottom:6%;
-    height:0%;
-    background:var(--paper);
-    border-radius:12px;
-    box-shadow: 0 8px 30px rgba(107,17,68,0.06);
-    overflow:auto;
-    transition: height 900ms cubic-bezier(.2,.95,.2,1), box-shadow 400ms;
-    z-index:2;
-    padding: 0 28px;
-    -webkit-overflow-scrolling: touch;
+    position:absolute; left:5%; right:5%; bottom:5%;
+    height:0%; border-radius:12px; background:#fffefc;
+    box-shadow:0 12px 40px rgba(0,0,0,0.08);
+    overflow:auto; transition: height 1s cubic-bezier(.2,.8,.2,1);
+    padding:0 30px;
+  }
+  .envelope.open .paper { height:88%; }
+
+  /* Conteúdo da carta */
+  .paper-inner {
+    opacity:0; transform: translateY(20px);
+    transition: opacity 1s ease 0.5s, transform 1s ease 0.5s;
+    padding:40px 10px;
+  }
+  .envelope.open .paper-inner { opacity:1; transform: translateY(0); }
+
+  .paper h1 { text-align:center; color:#ff4b8b; font-size:2rem; margin-bottom:20px; }
+  .paper p {
+    font-size:1.3rem; line-height:2rem; color:#4a1030; text-align:left;
+    white-space:pre-line;
   }
 
-  /* quando aberto, papel sobe e mostra o conteúdo */
-  .envelope.open .flap{
-    transform: rotateX(180deg) translateZ(2px);
-    transition: transform 900ms cubic-bezier(.18,.9,.28,1);
-  }
-  .envelope.open .paper{
-    height:84%;
-    transition: height 900ms cubic-bezier(.18,.9,.28,1);
-    box-shadow: 0 20px 60px rgba(107,17,68,0.12);
-  }
-
-  /* conteúdo do papel */
-  .paper-inner{
-    padding: 36px 18px;
-    opacity:0;
-    transform: translateY(10px) scale(.995);
-    transition: opacity 700ms ease 300ms, transform 700ms ease 300ms;
-    max-width: 860px;
-    margin: 0 auto;
-  }
-  .envelope.open .paper-inner{
-    opacity:1;
-    transform: translateY(0) scale(1);
-  }
-
-  .paper h1{
-    margin:0 0 12px 0;
-    font-size:1.6rem;
-    color:var(--accent-2);
-    letter-spacing:0.2px;
-    text-align:center;
-  }
-  .paper p{
-    margin:0;
-    color:var(--text);
-    font-size:1.05rem;
-    line-height:1.7;
-    text-align:left;
-  }
-
-  /* botão Abrir (no centro antes de abrir) */
+  /* Botão Abrir Carta */
   .btn-open {
-    position:absolute;
-    z-index:6;
-    background: linear-gradient(180deg,var(--accent),#ff4b98);
-    color:#fff;
-    border:0;
-    padding:14px 34px;
-    border-radius:999px;
-    font-weight:700;
-    font-size:1.05rem;
-    box-shadow: 0 10px 28px rgba(255,105,170,0.18);
-    transition: transform 250ms ease, opacity 300ms ease;
-    display:flex;
-    gap:10px;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
+    position:absolute; z-index:6; background:linear-gradient(180deg,#ff4b8b,#ff6fa6);
+    color:#fff; border:none; border-radius:999px; padding:18px 40px; font-size:1.3rem;
+    font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    animation: pulseBtn 2s ease-in-out infinite; transition: transform 0.3s, opacity 0.3s;
   }
-  .btn-open .spark{font-size:1.2rem}
-
-  /* pulso suave */
+  .btn-open span { font-size:1.3rem; margin-right:10px; }
   @keyframes pulseBtn {
     0%{transform:scale(1)}
-    50%{transform:scale(1.04)}
+    50%{transform:scale(1.05)}
     100%{transform:scale(1)}
   }
-  .btn-open{animation:pulseBtn 2200ms ease-in-out infinite}
-  .envelope.open .btn-open{opacity:0; transform:translateY(20px) scale(.98); pointer-events:none}
+  .envelope.open .btn-open { opacity:0; transform:translateY(30px) scale(.96); pointer-events:none; }
 
-  /* esconder o cursor depois de aberto para não ficar sugerindo click */
-  .envelope.open { cursor:default; }
+  /* Footer discreto */
+  .credit { position:absolute; bottom:12px; right:12px; font-size:0.85rem; color:rgba(59,16,48,0.5); }
 
-  /* responsividade e overflow quando aberto */
-  @media (max-width:520px){
-    .paper-inner{padding:28px 16px}
-    .paper p{font-size:1rem}
-    .btn-open{padding:12px 20px;font-size:1rem}
-  }
-
-  /* pequena animação de instrução (toque) antes de abrir */
-  .hint {
-    position:absolute;
-    bottom:20px;
-    left:50%;
-    transform:translateX(-50%);
-    font-size:0.95rem;
-    color:rgba(59,16,48,0.9);
-    z-index:5;
-    opacity:0.95;
-  }
-
-  /* footer discreto */
-  .credit {
-    position: absolute;
-    bottom:12px;
-    right:12px;
-    font-size:0.85rem;
-    color:rgba(59,16,48,0.5);
-    z-index:5;
-  }
-
-  /* quando a carta estiver fechada, uma leve inclinação ao pressionar */
-  .envelope:active{ transform: translateY(3px) scale(.998); }
 </style>
 </head>
 <body>
 
-  <!-- corações no fundo -->
-  <div class="hearts" id="hearts"></div>
+<!-- Corações -->
+<div class="hearts" id="hearts"></div>
 
-  <div class="wrap" aria-hidden="false">
-    <div class="envelope" id="envelope" role="button" aria-pressed="false" aria-label="Abrir carta">
-      <div class="shell" aria-hidden="true"></div>
-
-      <!-- aba que vira -->
-      <div class="flap" aria-hidden="true"></div>
-
-      <!-- papel que sobe -->
-      <div class="paper" id="paper" aria-hidden="true">
-        <div class="paper-inner" id="paperInner">
-          <h1>💌 Mensagem do Dia</h1>
-          <p id="mensagemText" tabindex="0" aria-live="polite"></p>
-        </div>
+<div class="wrap">
+  <div class="envelope" id="envelope" tabindex="0">
+    <div class="shell"></div>
+    <div class="flap"></div>
+    <div class="paper" id="paper">
+      <div class="paper-inner" id="paperInner">
+        <h1>💌 Mensagem do Dia</h1>
+        <p id="mensagemText"></p>
       </div>
-
-      <!-- botão grande no centro (aparece sobre a carta fechada) -->
-      <button class="btn-open" id="openBtn" aria-label="Abrir Carta — Clique para ler a mensagem">
-        <span class="spark">💞</span>
-        <span>Abrir Carta</span>
-      </button>
-
-      <div class="hint" id="hint">Toque na carta para abrir</div>
     </div>
+    <button class="btn-open" id="openBtn"><span>💞</span>Abrir Carta</button>
   </div>
+</div>
 
-  <div class="credit">Com carinho — Felipe</div>
+<div class="credit">Com carinho — Felipe</div>
 
 <script>
-  /***********************
-   *  Corações flutuantes
-   ***********************/
+  // ===== Corações =====
   (function makeHearts(){
     const container = document.getElementById('hearts');
-    const count = 16;
-    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-    for(let i=0;i<count;i++){
-      const s = document.createElement('span');
-      s.textContent = ['💖','💗','💘','💕'][Math.floor(Math.random()*4)];
-      s.style.left = (Math.random()*100).toFixed(2) + 'vw';
-      s.style.animationDuration = (8 + Math.random()*8).toFixed(2) + 's';
-      s.style.fontSize = (14 + Math.random()*30) + 'px';
-      s.style.opacity = (0.6 + Math.random()*0.45).toFixed(2);
-      s.style.bottom = (-10 - Math.random()*10) + 'vh';
-      s.style.pointerEvents = 'none';
+    for(let i=0;i<18;i++){
+      let s=document.createElement('span');
+      s.textContent=['💖','💗','💕','💘'][Math.floor(Math.random()*4)];
+      s.style.left=(Math.random()*100).toFixed(2)+'vw';
+      s.style.animationDuration=(6+Math.random()*8)+'s';
+      s.style.fontSize=(18+Math.random()*28)+'px';
+      s.style.opacity=(0.6+Math.random()*0.35).toFixed(2);
       container.appendChild(s);
     }
   })();
 
-  /*******************************
-   * Mensagens (30 mensagens carinhosas + motivacionais)
-   * *Sem datas visíveis*
-   *******************************/
+  // ===== Mensagens 30 dias =====
   const mensagens = [
-    "Bom dia, minha baixinha — que seu dia comece leve e termine cheio de paz. Acredite: você tem força pra tudo o que sonhar.",
-    "Que hoje você encontre beleza nas pequenas coisas. Lembre-se: seu sorriso ilumina muito mais que o dia.",
-    "Acorde com o coração leve; siga com confiança. Você é capaz, corajosa e merece tudo de bom.",
-    "Que o vento leve traga tranquilidade e coragem. Estou aqui torcendo por você em cada passo.",
-    "Que a energia do dia lhe traga alegria. Persistência e carinho constroem sonhos — e você merece realizar os seus.",
-    "Respire fundo, sorria, e siga em frente. Sua bondade transforma quem está ao seu redor.",
-    "Pequenas vitórias somam grandes conquistas. Hoje celebre qualquer passo, por menor que pareça.",
-    "Que seu café esteja quentinho e seu ânimo alto. Confie no seu tempo, tudo acontece no momento certo.",
+    "Bom dia, minha baixinha — que seu dia comece leve e termine cheio de paz. Você é capaz de tudo o que sonhar!",
+    "Que hoje você encontre beleza nas pequenas coisas. Seu sorriso ilumina muito mais que o dia.",
+    "Acorde com o coração leve; siga com confiança. Você é forte, corajosa e merece tudo de bom.",
+    "Que o vento leve traga tranquilidade e coragem. Estou torcendo por você em cada passo.",
+    "Que a energia do dia lhe traga alegria. Persistência e carinho constroem sonhos — e você merece realizá-los.",
+    "Respire fundo, sorria e siga em frente. Sua bondade transforma quem está ao seu redor.",
+    "Pequenas vitórias somam grandes conquistas. Hoje celebre cada passo.",
+    "Que seu café esteja quentinho e seu ânimo alto. Confie no seu tempo, tudo acontece certo.",
     "Você é calma que acalma, força que inspira. Sinta-se abraçada mesmo à distância.",
-    "Que hoje você note os detalhes bons: um encontro, um gesto, uma nova oportunidade.",
-    "Leveza no peito e brilho nos olhos — é assim que você enfrenta o mundo. Vai com tudo, baixinha.",
-    "Cuide do seu sorriso: ele é sua luz. Que hoje haja motivos para ele aparecer sempre.",
-    "Se permita desacelerar quando precisar; a pausa também é parte do caminho bonito que você trilha.",
+    "Que hoje note os detalhes bons: um encontro, um gesto, uma nova oportunidade.",
+    "Leveza no peito e brilho nos olhos — é assim que você enfrenta o mundo.",
+    "Cuide do seu sorriso: ele é sua luz. Que hoje haja motivos para ele aparecer.",
+    "Se permita desacelerar quando precisar; a pausa também é parte do caminho.",
     "Que sua intuição te guie hoje. Você tem tudo dentro de si para fazer escolhas cheias de sentido.",
     "Lembre-se: erros não definem você, apenas ensinam. Levante-se com carinho e siga confiante.",
-    "Seja gentil consigo mesma hoje. O amor-próprio é a base que permite a felicidade florescer.",
-    "Espalhe gentileza — e ela voltará multiplicada. Você tem o dom de tornar dias mais leves.",
-    "Que o dia traga surpresas boas. Mantenha o coração aberto para receber todas as coisas lindas.",
+    "Seja gentil consigo mesma hoje. O amor-próprio é a base da felicidade.",
+    "Espalhe gentileza — e ela voltará multiplicada. Você torna dias mais leves.",
+    "Que o dia traga surpresas boas. Mantenha o coração aberto para coisas lindas.",
     "Quando a mente duvidar, lembre do quanto você já venceu. Sua história é cheia de força.",
-    "PermitA-se sonhar alto hoje. Há espaço para seus sonhos crescerem e florescerem.",
-    "Que a paz esteja presente nas suas escolhas. Você merece tranquilidade e alegria constante.",
-    "A cada desafio, uma nova possibilidade de aprender. Confie no seu processo, você cresce a cada passo.",
-    "Que seu dia seja repleto de gentilezas — dadas e recebidas. Você faz diferença na vida de alguém.",
+    "Permita-se sonhar alto hoje. Há espaço para seus sonhos florescerem.",
+    "Que a paz esteja presente nas suas escolhas. Você merece tranquilidade e alegria.",
+    "A cada desafio, uma nova possibilidade de aprender. Confie no seu processo.",
+    "Que seu dia seja repleto de gentilezas — dadas e recebidas. Você faz diferença.",
     "Sinta-se abraçada por quem torce por você. Você é amada, valorizada e essencial.",
-    "Permita-se celebrar conquistas — mesmo as pequenas. Elas constroem a ponte para coisas maiores.",
+    "Permita-se celebrar conquistas — mesmo as pequenas. Elas constroem o caminho.",
     "Hoje busque aquilo que te faz bem. Seu bem-estar é prioridade e merece cuidado.",
-    "Cultive pensamentos doces hoje; eles influenciam seu humor e suas atitudes com carinho.",
-    "Lembre-se: sua presença é um presente para o mundo. Nunca subestime o valor que você tem.",
-    "Termine o dia agradecendo as conquistas. O amanhã vem com novas oportunidades — e você está pronta."
+    "Cultive pensamentos doces hoje; eles influenciam seu humor e atitudes.",
+    "Lembre-se: sua presença é um presente para o mundo. Nunca subestime seu valor.",
+    "Termine o dia agradecendo as conquistas. Amanhã vem com novas oportunidades.",
+    "Que seu coração transborde gratidão, e nada apague seu brilho."
   ];
 
-  /****************************************
-   * Cálculo do índice da mensagem exibida
-   * começa no dia 30/10/2025 como índice 0
-   ****************************************/
-  (function setMensagemDoDia(){
-    const cycleStart = new Date(2025, 9, 30); // mês 0-index (9 = outubro)
-    const today = new Date();
-    // zerar hora para evitar problemas com fuso/hora
-    const utcStart = Date.UTC(cycleStart.getFullYear(), cycleStart.getMonth(), cycleStart.getDate());
-    const utcToday = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
-    const msPerDay = 24*60*60*1000;
-    let daysDiff = Math.floor((utcToday - utcStart)/msPerDay);
-    // pode ser negativo se usuário abrir antes de 30/10/2025, ajustar
-    if (isNaN(daysDiff) || !isFinite(daysDiff)) daysDiff = 0;
-    // index dentro do ciclo de 30 dias
-    const idx = ((daysDiff % mensagens.length) + mensagens.length) % mensagens.length;
-    window._mensagemIndex = idx;
-    document.getElementById('mensagemText').textContent = mensagens[idx];
-  })();
+  // ===== Definir mensagem do dia =====
+  const today = new Date();
+  const startDate = new Date(2025,9,30); // 30/10/2025
+  const daysDiff = Math.floor((today-startDate)/(24*60*60*1000));
+  const index = ((daysDiff % mensagens.length) + mensagens.length) % mensagens.length;
+  document.getElementById('mensagemText').textContent = mensagens[index];
 
-  /****************************************
-   * Abertura da carta: interações e animação
-   ****************************************/
+  // ===== Abrir carta =====
   const envelope = document.getElementById('envelope');
   const openBtn = document.getElementById('openBtn');
-  const hint = document.getElementById('hint');
-
-  function openLetter(){
-    if(envelope.classList.contains('open')) return;
-    // animação de abertura
-    envelope.classList.add('open');
-    envelope.setAttribute('aria-pressed','true');
-    // sumir botão e hint depois de curto delay (para suavidade)
-    openBtn.style.transition = 'opacity 360ms ease, transform 360ms ease';
-    openBtn.style.opacity = '0';
-    openBtn.style.transform = 'translateY(20px) scale(.96)';
-    hint.style.opacity = '0';
-    // permitir scroll do conteúdo dentro do paper quando aberto
-    const paper = document.getElementById('paper');
-    setTimeout(()=> {
-      paper.setAttribute('aria-hidden','false');
-      // ao abrir, dar foco no parágrafo pra acessibilidade (voz/ler)
-      const msg = document.getElementById('mensagemText');
-      msg.setAttribute('tabindex','-1');
-      msg.focus({preventScroll:true});
-    }, 800);
-  }
-
-  // clicar na carta ou no botão abre
-  envelope.addEventListener('click', e => {
-    // se clicar especificamente em áreas scrolláveis quando já aberto, não fechar
-    if (envelope.classList.contains('open')) return;
-    openLetter();
-  });
-  openBtn.addEventListener('click', e => {
+  openBtn.addEventListener('click', e=>{
     e.stopPropagation();
-    openLetter();
+    envelope.classList.add('open');
   });
-
-  // tecla Enter / Espaço para abrir (acessibilidade)
-  envelope.addEventListener('keydown', e => {
-    if(e.key === 'Enter' || e.key === ' '){
-      e.preventDefault();
-      openLetter();
-    }
+  envelope.addEventListener('click', ()=>{
+    envelope.classList.add('open');
   });
-  envelope.setAttribute('tabindex','0');
-
-  // Ajuste de comportamento em telas pequenas: permitir rolagem da página após abrir
-  (function allowPageScrollAfterOpen(){
-    const paper = document.getElementById('paper');
-    const onOpen = () => {
-      // quando a carta abrir, permitir que o usuário role o conteúdo interno (paper is scrollable)
-      // e também permitir rolar a janela caso o content exceda view height
-      if(envelope.classList.contains('open')){
-        document.body.style.overflow = 'auto';
-      }
-    };
-    // observar mudanças de classe
-    const obs = new MutationObserver(onOpen);
-    obs.observe(envelope, { attributes: true, attributeFilter: ['class']});
-  })();
-
-  // pequeno ajuste: se o usuário já estiver num dia do ciclo, mas quiser ver outra mensagem,
-  // poderia haver navegação — não pedida agora. Mantemos simples: apenas mostrar a mensagem do dia.
-
 </script>
 </body>
 </html>
