@@ -3,41 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Carta pra Baixinha 💌</title>
+<title>Carta para Baixinha 💌</title>
 <style>
   body {
     margin: 0;
-    padding: 0;
-    font-family: "Poppins", sans-serif;
-    background: radial-gradient(circle at top left, #ffb6c1, #ff5f6d, #ffc371);
     height: 100vh;
-    overflow: hidden;
+    background: linear-gradient(180deg, #ffb6c1, #ffe4e1);
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: "Poppins", sans-serif;
+    overflow: hidden;
   }
 
-  .heart {
+  .contador {
     position: fixed;
-    width: 20px;
-    height: 20px;
-    background: rgba(255,255,255,0.7);
-    clip-path: polygon(50% 0%, 61% 22%, 85% 22%, 69% 38%, 75% 62%, 50% 50%, 25% 62%, 31% 38%, 15% 22%, 39% 22%);
-    animation: float 6s infinite ease-in;
-  }
-  @keyframes float {
-    0% {transform: translateY(0) scale(1);}
-    50% {transform: translateY(-200px) scale(1.2);}
-    100% {transform: translateY(0) scale(1);}
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #e91e63;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
   }
 
   .envelope {
     position: relative;
-    width: 300px;
-    height: 200px;
-    background: #f4d7d7;
-    border: 2px solid #e6a5a5;
-    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    width: 320px;
+    height: 220px;
+    background: #ff4d6d;
+    border-radius: 0 0 20px 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     transform-style: preserve-3d;
     cursor: pointer;
     transition: transform 1s ease-in-out;
@@ -45,156 +44,141 @@
 
   .flap {
     position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 50%;
-    background: #f7b6b6;
+    background: #ff6b81;
+    top: 0;
+    border-bottom: 2px solid #ff99a6;
     transform-origin: top;
     transition: transform 1s ease-in-out;
     z-index: 2;
   }
 
-  .letter {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 0;
-    background: #fff;
-    box-sizing: border-box;
-    padding: 0 20px;
-    overflow: hidden;
-    border-radius: 5px;
-    transition: height 1s ease-in-out;
-    z-index: 1;
+  .envelope.open .flap {
+    transform: rotateX(-180deg);
   }
 
-  .envelope.open .flap {
-    transform: rotateX(180deg);
-  }
-  .envelope.open .letter {
-    height: 300px;
+  .letter {
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    background: white;
+    top: 5%;
+    left: 5%;
+    border-radius: 10px;
+    padding: 20px;
+    box-sizing: border-box;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1.5s ease, transform 1s ease;
     overflow-y: auto;
   }
 
-  .open-btn {
+  .envelope.open .letter {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  #openBtn {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: #ff4d6d;
-    color: white;
+    background: #fff;
+    color: #e91e63;
+    font-weight: bold;
+    padding: 10px 25px;
+    border-radius: 20px;
     border: none;
-    padding: 16px 36px;
-    border-radius: 10px;
-    font-size: 1.3rem;
     cursor: pointer;
-    box-shadow: 0 0 15px #ff4d6d;
-    animation: pulse 1.5s infinite;
+    font-size: 18px;
     z-index: 3;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
   }
 
-  @keyframes pulse {
-    0% {transform: translate(-50%, -50%) scale(1);}
-    50% {transform: translate(-50%, -50%) scale(1.1);}
-    100% {transform: translate(-50%, -50%) scale(1);}
-  }
-
-  .day-counter {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    background: rgba(255,255,255,0.7);
-    color: #ff4d6d;
-    padding: 8px 14px;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 0.9rem;
+  #openBtn:hover {
+    background: #e91e63;
+    color: white;
   }
 
   .message {
-    color: #333;
-    font-size: 1.1rem;
+    font-size: 16px;
     line-height: 1.6;
-    text-align: center;
-    margin-top: 20px;
+    color: #333;
+    text-align: justify;
+    margin-bottom: 15px;
   }
 
+  .message::before {
+    content: "💌 ";
+  }
 </style>
 </head>
 <body>
 
+<div class="contador" id="contador">💖 Dia 1 de 30 💖</div>
+
 <div class="envelope" id="envelope">
   <div class="flap"></div>
+  <button id="openBtn">Abrir 💌</button>
   <div class="letter" id="letter">
-    <div class="message" id="mensagemText"></div>
+    <div id="messages"></div>
   </div>
-  <button class="open-btn" id="openBtn">Abrir Carta 💞</button>
 </div>
 
-<div class="day-counter" id="contador"></div>
-
 <script>
-  // Corações animados
-  for(let i=0;i<25;i++){
-    let h=document.createElement('div');
-    h.className='heart';
-    h.style.left=Math.random()*100+'%';
-    h.style.animationDelay=(Math.random()*5)+'s';
-    h.style.opacity=Math.random();
-    document.body.appendChild(h);
-  }
+const envelope = document.getElementById('envelope');
+const openBtn = document.getElementById('openBtn');
+const messagesDiv = document.getElementById('messages');
+const contador = document.getElementById('contador');
 
-  const mensagens = [
-    "Bom dia, minha Baixinha 💖 Hoje o mundo parece mais leve só por saber que você existe. Que o seu dia seja cheio de sorrisos, fé e calmaria. Lembre-se: você é capaz de iluminar qualquer lugar que pisa 🌞",
-    "Minha Baixinha, o amanhecer traz novas chances de ser feliz. Que o seu coração se encha de gratidão e coragem. Cada passo que você dá é importante, e eu acredito demais em você 💪💗",
-    "Baixinha, a vida é mais bonita quando você olha pra ela com esperança. Respira fundo, levanta a cabeça e vai com confiança — o universo conspira por quem sonha ✨",
-    "Hoje é mais um dia pra mostrar o quanto você é forte, Baixinha. Mesmo que algo pareça difícil, lembre-se: você já superou tanta coisa. E eu admiro isso em você 💫",
-    "Bom dia, Baixinha 🌸 Que o seu sorriso seja o seu maior escudo. Que nenhuma preocupação te tire a paz e que o amor guie cada instante do seu dia 💞",
-    "Baixinha, hoje é dia de acreditar — em você, nos seus sonhos, e nas pequenas alegrias que a vida traz. Nunca duvide do poder que tem dentro de si 🌻",
-    "Minha Baixinha, às vezes a vida pede calma. Respira, desacelera e lembra: tudo tem o tempo certo pra florescer 🌷",
-    "Hoje, quero que você se olhe no espelho e perceba o quanto é incrível, Baixinha. Não há ninguém como você, e é isso que te faz tão especial 💫",
-    "Baixinha, o mundo precisa da sua luz. Nunca deixe que os ventos apaguem o que há de mais bonito em você 🌟",
-    "Bom dia, minha Baixinha 💕 Que o amor e a esperança sejam sua força. Que cada momento do seu dia te lembre o quanto é amada e importante 💌",
-    "Baixinha, que hoje você encontre motivos pra sorrir. Seja um café gostoso, um abraço sincero ou uma boa risada. O simples também é mágico ☕💖",
-    "Minha Baixinha, cada dia é uma página nova — e você merece escrever uma história cheia de amor, fé e boas surpresas 📖✨",
-    "Baixinha, o sol nasceu de novo só pra te ver brilhar. Não deixe que nada apague o seu brilho 🌞💞",
-    "Hoje é o dia perfeito pra ser gentil com você mesma, Baixinha. Se acolha, se abrace e siga com leveza 🍃💗",
-    "Minha Baixinha, o amor mora nos detalhes. E você é o detalhe mais lindo dos meus dias 💝",
-    "Baixinha, lembra de agradecer por estar aqui, por ter saúde, por poder recomeçar. A vida sorri pra quem sorri pra ela 🌈",
-    "Bom dia, minha Baixinha 🌸 Que seu coração se encha de paz e que seus sonhos se aproximem a cada passo 💖",
-    "Baixinha, mesmo nos dias nublados, o sol nunca deixa de existir — e você também não perde seu brilho. Continue sendo essa força bonita 🌤️",
-    "Minha Baixinha, hoje escolha acreditar mais em si. Você é mais forte, mais capaz e mais linda do que imagina 💪💗",
-    "Baixinha, cada amanhecer é um lembrete: a vida sempre recomeça, e o amor sempre vence 🌅💞",
-    "Minha Baixinha, se as coisas apertarem hoje, lembra que você nunca está sozinha. Tudo vai dar certo no tempo certo 🌻",
-    "Bom dia, Baixinha 💕 Encare o dia com fé, e ele vai te retribuir com boas surpresas. Você merece o melhor 🌸",
-    "Baixinha, respira fundo e segue. O dia pode até ser longo, mas o seu coração sabe o caminho certo 🌿",
-    "Minha Baixinha, a cada amanhecer o universo te oferece um novo começo. Aceita com gratidão 🌞💫",
-    "Baixinha, o segredo da vida é seguir com amor — mesmo quando o caminho é difícil. E você faz isso lindamente 💗",
-    "Bom dia, minha Baixinha 🌷 Que seu dia tenha paz, sorrisos e boas energias. Você é o tipo de pessoa que transforma o mundo ao redor 💕",
-    "Baixinha, hoje escolha se cuidar, se valorizar e se permitir ser feliz. Você merece o melhor da vida 💖",
-    "Minha Baixinha, que a fé seja sua força, o amor sua guia e a esperança seu abrigo 💫",
-    "Baixinha, nunca se esqueça: você é luz, é amor, é força. O mundo é mais bonito porque você existe 🌹",
-    "Bom dia, minha Baixinha 💌 Último dia desse ciclo de mensagens, mas o carinho continua. Que seu dia seja lindo e cheio de amor ❤️"
-  ];
+const mensagens = [
+  "Bom dia, baixinha ❤️ Hoje eu só quero que você saiba o quanto eu penso em você. Desde o primeiro sorriso até cada mensagem sua, tudo em mim se ilumina quando você aparece.",
+  "Sabe, às vezes eu fico lembrando das nossas conversas, das brincadeiras, das risadas... e percebo o quanto você virou uma parte boa do meu dia 🥰.",
+  "Baixinha, você tem um jeitinho único de deixar tudo mais leve. É como se o mundo ficasse mais bonito só porque você existe 🌸.",
+  "Se eu pudesse, te enchia de abraços agora. Daqueles longos, que falam mais do que mil palavras 🤗.",
+  "Hoje o dia pode estar corrido, mas eu não podia deixar de te lembrar: você é incrível, e eu admiro demais a pessoa que você é 💖.",
+  "Tem algo em você que me puxa, que me prende... e quanto mais eu conheço, mais eu quero ficar por perto 😍.",
+  "Não sei se é o seu sorriso, o seu jeito, ou o seu olhar — mas alguma coisa em você me desarma completamente 💫.",
+  "Baixinha, você merece o mundo todinho! E se eu pudesse, colocava cada estrela só pra te ver sorrir ✨.",
+  "Eu adoro como a gente se entende, mesmo nas brincadeiras mais bobas. É leve, é sincero, é nosso 💕.",
+  "Hoje eu só queria estar do seu lado. Pra te olhar, rir contigo e esquecer do resto do mundo 🌍.",
+  "Você é aquele tipo de pessoa que faz qualquer dia valer a pena, mesmo os mais simples ☀️.",
+  "Sinto falta das nossas conversas longas, da sua voz, do seu jeito de rir — tudo isso ficou guardado em mim 💭.",
+  "Baixinha, se eu pudesse te descrever em uma palavra, seria 'luz'. Porque é isso que você traz pra minha vida 🌟.",
+  "Tem gente que chega e muda tudo sem precisar fazer esforço. E você foi exatamente assim comigo 💌.",
+  "Às vezes eu me pego sorrindo sozinho, e aí percebo: é culpa sua, baixinha 😅.",
+  "Você é linda de um jeito que nem dá pra explicar, é aquele tipo de beleza que vem de dentro, sabe? 💕.",
+  "Queria que você soubesse o quanto eu gosto de ter você por perto, mesmo que seja só em pensamento 💭.",
+  "Baixinha, o mundo pode ser grande, mas nenhum lugar é tão bom quanto estar pertinho de você 💞.",
+  "Hoje é mais um dia pra te lembrar o quanto você é especial, importante e linda. Nunca duvide disso 💐.",
+  "Se existe sorte, a minha foi ter te conhecido — e o azar é de quem ainda não te conhece 😜.",
+  "Você tem um jeito doce e forte ao mesmo tempo. Isso me encanta e me inspira todo dia 🌺.",
+  "Baixinha, espero que o seu dia seja leve, bonito e cheio de coisas boas. Você merece o melhor 💫.",
+  "Hoje eu só queria poder te olhar nos olhos e dizer o quanto gosto de você. Mas por enquanto, fica essa mensagem ❤️.",
+  "Com você, até o silêncio tem significado. E é bonito demais estar nesse tipo de sintonia 🌙.",
+  "Cada dia que passa, eu gosto mais de te conhecer. E olha que já gosto pra caramba 😌.",
+  "Baixinha, se eu pudesse, te mandava um abraço agora só pra sentir que tá tudo bem 🤍.",
+  "Você é tipo aquele sonho bom que a gente quer reviver toda noite 💭💋.",
+  "A cada dia, percebo que te querer bem é o melhor hábito que eu podia ter criado ❤️.",
+  "O tempo pode passar, mas o carinho que eu tenho por você só cresce 🌷.",
+  "E pra fechar esses 30 dias, quero que saiba: eu não escrevi só mensagens… escrevi pedacinhos do que sinto por você 💞."
+];
 
-  const today = new Date();
-  const startDate = new Date(2025, 9, 30); // 30/10/2025
-  const daysDiff = Math.floor((today - startDate) / (24*60*60*1000));
-  const index = ((daysDiff % mensagens.length) + mensagens.length) % mensagens.length;
+// Define o dia com base na data atual (1 a 30)
+const dataInicio = new Date(2025, 9, 30); // 30 de outubro de 2025
+const hoje = new Date();
+let diferencaDias = Math.floor((hoje - dataInicio) / (1000 * 60 * 60 * 24)) + 1;
+if (diferencaDias < 1) diferencaDias = 1;
+if (diferencaDias > 30) diferencaDias = 30;
 
-  document.getElementById("mensagemText").textContent = mensagens[index];
-  document.getElementById("contador").textContent = `💖 Dia ${index+1} de ${mensagens.length} 💖`;
+contador.innerHTML = `💖 Dia ${diferencaDias} de 30 💖`;
+messagesDiv.innerHTML = `<div class="message">${mensagens[diferencaDias - 1]}</div>`;
 
-  const envelope = document.getElementById("envelope");
-  const openBtn = document.getElementById("openBtn");
-
-  openBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    envelope.classList.add("open");
-    openBtn.style.display = "none";
-  });
+openBtn.addEventListener('click', () => {
+  envelope.classList.add('open');
+  openBtn.style.display = 'none';
+});
 </script>
 
 </body>
