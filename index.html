@@ -14,7 +14,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 30px;
     min-height: 100vh;
     text-align: center;
@@ -49,7 +49,7 @@
   }
 
   .buttons, .back-button {
-    margin-top: 40px;
+    margin-top: 30px;
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
@@ -74,16 +74,36 @@
     transform: scale(1.1) rotate(-2deg);
     box-shadow: 0 0 25px #ff3860, 0 0 50px #ff1f4a;
   }
+
+  #message {
+    display: none;
+  }
 </style>
 </head>
 <body>
 
   <h1>Pra minha Baixinha 💋🔥</h1>
 
+  <!-- Mensagem principal sempre visível -->
+  <p id="mainMessage">
+    Eu não sei explicar o que acontece quando a gente se encontra, Baixinha…  
+    é como se o mundo ficasse em silêncio e só a gente existisse.  
+    O jeito que você olha, o sorriso de canto, aquela risadinha... tudo me desarma.  
+    <br><br>
+    Hoje, mais do que nunca, eu percebi o quanto essa conexão nossa é intensa.  
+    A gente se entende num olhar, numa provocada, num toque que fala mais do que mil palavras.  
+    E é impossível negar: tem algo em você que me puxa, me instiga e me faz querer mais.  
+    <br><br>
+    Da próxima vez, quero que a gente vá além.  
+    Quero ver até onde essa química pode levar a gente —  
+    mas sem pressa, só deixando o clima falar por si.  
+    <br><br>
+    Só de lembrar de hoje, já fico com aquele sorriso bobo, imaginando o que ainda vem por aí...  
+    e te prometo uma coisa: quando acontecer de novo, vai ser daquelas lembranças que marcam.
+  </p>
+
+  <!-- Menu de botões -->
   <div id="menu">
-    <p>
-      Escolhe uma mensagem, minha baixinha… cada uma vai te deixar com aquele sorriso bobo 😈💖
-    </p>
     <div class="buttons">
       <button onclick="showMessage(1)">Me provoca de novo 😈🔥</button>
       <button onclick="showMessage(2)">Quero sentir você 💋</button>
@@ -91,7 +111,8 @@
     </div>
   </div>
 
-  <div id="message" style="display:none;">
+  <!-- Mensagem dos botões -->
+  <div id="message">
     <p id="messageText"></p>
     <div class="back-button">
       <button onclick="backToMenu()">🔙 Voltar ao menu</button>
@@ -99,23 +120,21 @@
   </div>
 
 <script>
+  // Mensagens totalmente novas e diferentes da carta principal
   const messages = {
-    1: `Baixinha… cada vez que penso em você, sinto um fogo que não dá pra apagar 😈🔥.
-O jeito que você me olha, como se já soubesse o que vai acontecer, me deixa arrepiado só de lembrar.
-Cada risada sua, cada suspiro, cada provocação… me deixa querendo explorar cada pedacinho do nosso mundo secreto.`,
+    1: `Meu fogo, hoje eu fico imaginando cada olhar seu, cada risadinha provocante 😈🔥.  
+Quero sentir você me testando, me desafiando e, no final, a gente rindo juntos da tensão que criamos.`,
 
-    2: `Só de imaginar você perto de mim, meu coração dispara 💓💋.
-Quero sentir cada toque seu, cada olhadinha intensa, e deixar a tensão crescer até explodir 🔥.
-A gente sabe brincar com o que sente, e eu tô louco pra viver cada segundo dessa química louca.`,
+    2: `Baixinha, só de pensar no toque da sua mão meu corpo inteiro reage 💓💋.  
+É uma mistura de desejo e carinho, e eu mal posso esperar pra sentir de novo o calor da nossa conexão.`,
 
-    3: `Minha baixinha… quando você decide brincar comigo 😏, tudo ao redor desaparece.
-É aquele jogo de provocação, suspiros e risadas que me deixam sem chão.
-Da próxima vez, quero que a gente vá além, descobrindo até onde essa conexão pode nos levar 💖🔥.`
+    3: `Quando você vem com esse jeito travesso 😏, minha mente não para de criar cenários quentes.  
+Cada momento com você é um jogo de provocações, e eu quero explorar cada segundo dessa nossa química 💖🔥.`
   };
 
   function showMessage(num) {
     document.getElementById('menu').style.display = 'none';
-    document.getElementById('messageText').innerText = messages[num];
+    document.getElementById('messageText').innerHTML = messages[num];
     document.getElementById('message').style.display = 'block';
   }
 
