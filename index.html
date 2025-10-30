@@ -3,26 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mensagem do Dia 💌</title>
+<title>Carta do Dia 💌</title>
 <style>
-  /* Fundo animado com gradiente em movimento */
   body {
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
-    color: #4a1c40;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    min-height: 100vh;
-    text-align: center;
-    padding: 40px 20px;
-    overflow-y: auto;
-    background: linear-gradient(270deg, #ffdde1, #ee9ca7, #fad0c4, #fcb69f);
+    background: linear-gradient(270deg, #fcb69f, #ffdde1, #fad0c4, #ee9ca7);
     background-size: 800% 800%;
     animation: gradientMove 15s ease infinite;
-    position: relative;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4a1c40;
   }
 
   @keyframes gradientMove {
@@ -32,22 +27,11 @@
   }
 
   /* Corações flutuando */
-  .hearts {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 0;
-  }
-
   .hearts span {
     position: absolute;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 24px;
     animation: float 8s linear infinite;
-    font-size: 18px;
   }
 
   @keyframes float {
@@ -56,43 +40,86 @@
     100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
   }
 
-  h1 {
-    margin-top: 60px;
-    font-size: 2.2rem;
-    color: #a00049;
-    z-index: 1;
-    animation: fadeIn 2s ease-in-out;
+  /* Envelope (tela cheia) */
+  .envelope {
+    position: relative;
+    width: 90vw;
+    height: 70vh;
+    background: #ffafcc;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(255, 100, 150, 0.4);
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.4s ease;
+    z-index: 2;
   }
 
-  p {
-    margin-top: 30px;
-    font-size: 1.2rem;
-    line-height: 1.8;
-    max-width: 700px;
-    background: rgba(255, 255, 255, 0.75);
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 0 20px rgba(255, 150, 150, 0.4);
-    animation: fadeInText 2.5s ease-in-out;
+  /* Aba superior da carta */
+  .flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: #ff8fab;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top;
+    transition: transform 0.8s ease;
+    z-index: 3;
+  }
+
+  .envelope.open .flap {
+    transform: rotateX(180deg);
+  }
+
+  /* Papel da carta */
+  .letter {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: #fff;
+    border-radius: 8px 8px 0 0;
+    box-shadow: inset 0 0 10px rgba(255, 150, 150, 0.3);
+    text-align: center;
+    overflow: hidden;
+    transition: height 1s ease;
     z-index: 1;
+  }
+
+  .envelope.open .letter {
+    height: 100%;
+  }
+
+  /* Mensagem */
+  .mensagem {
+    opacity: 0;
+    padding: 40px 20px;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #4a1c40;
+    transition: opacity 1.5s ease;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .envelope.open .mensagem {
+    opacity: 1;
   }
 
   footer {
-    margin-top: 40px;
-    font-size: 1rem;
+    position: absolute;
+    bottom: 20px;
     color: #6a2c70;
+    font-size: 1rem;
     opacity: 0.8;
-    z-index: 1;
   }
 
-  @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
-  }
-
-  @keyframes fadeInText {
-    from {opacity: 0; transform: translateY(20px);}
-    to {opacity: 1; transform: translateY(0);}
+  h1 {
+    font-size: 2rem;
+    color: #a00049;
+    margin-bottom: 10px;
   }
 </style>
 </head>
@@ -101,62 +128,73 @@
   <!-- Corações flutuantes -->
   <div class="hearts" id="hearts"></div>
 
-  <h1>Mensagem do Dia 💖</h1>
-  <p id="mensagem"></p>
+  <div class="envelope" id="envelope">
+    <div class="flap"></div>
+    <div class="letter">
+      <h1>💌 Mensagem do Dia 💌</h1>
+      <div class="mensagem" id="mensagem"></div>
+    </div>
+  </div>
 
-  <footer>Com carinho, do Felipe 💌</footer>
+  <footer>Com carinho, do Felipe 💖</footer>
 
 <script>
-  // Gerar corações flutuando
+  // Criar corações flutuando
   const heartsContainer = document.getElementById('hearts');
   for (let i = 0; i < 15; i++) {
     let heart = document.createElement('span');
-    heart.innerHTML = '💗';
+    heart.innerHTML = '💖';
     heart.style.left = Math.random() * 100 + 'vw';
     heart.style.animationDuration = (5 + Math.random() * 5) + 's';
-    heart.style.fontSize = (16 + Math.random() * 20) + 'px';
+    heart.style.fontSize = (18 + Math.random() * 24) + 'px';
     heartsContainer.appendChild(heart);
   }
 
   // Mensagens diárias
   const mensagens = [
-    "30/10 - Bom dia, minha baixinha 🌞 Que seu dia comece com sorrisos e termine com paz. Lembre-se: você é capaz de tudo que sonhar 💪❤️",
-    "31/10 - Que hoje você veja beleza até nas pequenas coisas ✨ Você é luz e espalha amor por onde passa 💕",
-    "01/11 - Acorde com o coração leve e o sorriso confiante 😌 O mundo fica mais bonito quando você acredita em si mesma 💖",
-    "02/11 - Que hoje você sinta o vento leve e perceba o quanto é forte 🌷 Você é minha inspiração diária 💫",
-    "03/11 - Bom dia! Que sua energia boa ilumine tudo à sua volta 🌞 A vida sorri pra quem não desiste 🌻",
-    "04/11 - Que cada passo hoje te leve mais perto dos seus sonhos 💭 Eu acredito em você, sempre 💕",
-    "05/11 - Acorde, respire fundo e siga firme 🌈 Você tem um coração lindo e uma alma gigante 💖",
-    "06/11 - Hoje é dia de vencer com leveza 🌸 Lembre-se: tudo o que é seu, chega na hora certa 💫",
-    "07/11 - Que seu café venha quente e o dia cheio de alegrias ☕💗 Você merece o melhor do mundo!",
-    "08/11 - Que seu dia tenha paz, risadas e boas surpresas 🌻 Nunca esqueça o quanto é especial 💕",
-    "09/11 - Você é aquela calmaria que o mundo precisa 🌤️ Que seu dia seja suave e cheio de amor 💓",
-    "10/11 - Que a vida te abrace com carinho hoje 🤗 Tudo vai dar certo, eu prometo 🌷",
-    "11/11 - Que seu sorriso seja sua armadura hoje 😄 E que o amor esteja presente em cada gesto 💖",
-    "12/11 - Acorde e agradeça 🌞 Cada novo dia é uma chance de recomeçar e ser feliz 💐",
-    "13/11 - Que seu coração encontre motivos pra sorrir hoje 🌈 Você é incrível, nunca duvide disso 💕",
-    "14/11 - Hoje é o dia perfeito pra espalhar bondade 🌻 E pra lembrar o quanto você é amada 💗",
-    "15/11 - Que a vida te surpreenda com alegrias simples 💕 Um sorriso seu já muda meu dia inteiro 😍",
-    "16/11 - Permita-se ser leve hoje 🍃 E lembre: você é a razão de muitos sorrisos 💫",
-    "17/11 - Acorde com fé e siga com coragem 💪 Tudo o que é verdadeiro encontra seu caminho 💖",
-    "18/11 - Que seu dia tenha amor, paz e sonhos possíveis 🌞 Você é minha inspiração diária 💓",
-    "19/11 - Que hoje você brilhe sem medo 🌟 O mundo precisa da sua luz 💕",
-    "20/11 - Bom dia, baixinha 💖 Nunca esqueça o quanto é linda por dentro e por fora 🌹",
-    "21/11 - Que a vida te traga motivos pra sorrir hoje 😍 Você merece o melhor sempre 💫",
-    "22/11 - Acredite em si, confie no tempo 🌷 Tudo vai se encaixar da forma mais bonita 💕",
-    "23/11 - Hoje é o dia perfeito pra ser feliz 🌈 Espalhe o bem e receba o amor de volta 💖",
-    "24/11 - Que a paz te acompanhe o dia inteiro ☀️ E que o amor esteja em cada detalhe 💗",
-    "25/11 - Acorde, se olhe e lembre: você é especial demais 🌻 Eu torço por você sempre 💫",
-    "26/11 - Que hoje o universo conspire a seu favor 💕 Você é luz e merece brilhar 🌟",
-    "27/11 - Que seu coração transborde gratidão hoje 💖 E que nada apague seu brilho 🌅",
-    "28/11 - Último dia desse ciclo 🌸 Que ele termine com amor, fé e muitos sorrisos 💕"
+    "Bom dia, minha baixinha 🌞 Que seu dia comece com leveza e termine com paz. Você é capaz de tudo o que sonhar 💪❤️",
+    "Que hoje você veja beleza até nas pequenas coisas ✨ Você é luz e espalha amor por onde passa 💕",
+    "Acorde com o coração leve e o sorriso confiante 😌 O mundo fica mais bonito quando você acredita em si mesma 💖",
+    "Que hoje você sinta o vento leve e perceba o quanto é forte 🌷 Você é minha inspiração diária 💫",
+    "Bom dia! Que sua energia boa ilumine tudo à sua volta 🌞 A vida sorri pra quem não desiste 🌻",
+    "Que cada passo hoje te leve mais perto dos seus sonhos 💭 Eu acredito em você, sempre 💕",
+    "Acorde, respire fundo e siga firme 🌈 Você tem um coração lindo e uma alma gigante 💖",
+    "Hoje é dia de vencer com leveza 🌸 Lembre-se: tudo o que é seu, chega na hora certa 💫",
+    "Que seu café venha quente e o dia cheio de alegrias ☕💗 Você merece o melhor do mundo!",
+    "Que seu dia tenha paz, risadas e boas surpresas 🌻 Nunca esqueça o quanto é especial 💕",
+    "Você é aquela calmaria que o mundo precisa 🌤️ Que seu dia seja suave e cheio de amor 💓",
+    "Que a vida te abrace com carinho hoje 🤗 Tudo vai dar certo, eu prometo 🌷",
+    "Que seu sorriso seja sua força hoje 😄 O mundo precisa do seu brilho 💫",
+    "Acorde e agradeça 🌞 Cada novo dia é uma chance de recomeçar 💕",
+    "Que seu coração encontre motivos pra sorrir hoje 🌈 Você é incrível 💖",
+    "Hoje é o dia perfeito pra espalhar amor 🌸 E pra lembrar o quanto você é amada 💗",
+    "Que a vida te surpreenda com alegrias simples 💕 Um sorriso seu já muda meu dia 😍",
+    "Permita-se ser leve hoje 🍃 Você é a razão de muitos sorrisos 💫",
+    "Acorde com fé e siga com coragem 💪 Tudo o que é verdadeiro encontra seu caminho 💖",
+    "Que seu dia tenha amor, paz e sonhos possíveis 🌞 Você é minha inspiração 💓",
+    "Que hoje você brilhe sem medo 🌟 O mundo precisa da sua luz 💕",
+    "Bom dia, baixinha 💖 Nunca esqueça o quanto é linda por dentro e por fora 🌹",
+    "Que a vida te traga motivos pra sorrir hoje 😍 Você merece o melhor sempre 💫",
+    "Acredite em si, confie no tempo 🌷 Tudo vai se encaixar da forma mais bonita 💕",
+    "Hoje é o dia perfeito pra ser feliz 🌈 Espalhe o bem e receba o amor 💖",
+    "Que a paz te acompanhe o dia inteiro ☀️ E que o amor esteja em cada detalhe 💗",
+    "Acorde, se olhe e lembre: você é especial 🌻 Eu torço por você sempre 💫",
+    "Que hoje o universo conspire a seu favor 💕 Você é luz e merece brilhar 🌟",
+    "Que seu coração transborde gratidão 💖 E que nada apague seu brilho 🌅",
+    "Que esse dia seja cheio de amor, fé e sorrisos 🌸 Você é tudo de bom 💕"
   ];
 
-  // Mostrar mensagem do dia conforme a data
+  // Mostrar mensagem conforme o dia
   const hoje = new Date();
   const dia = hoje.getDate();
-  const index = dia >= 30 ? dia - 30 : dia; // começa em 30/10
-  document.getElementById("mensagem").textContent = mensagens[index] || "💖 Tenha um dia cheio de amor e boas energias!";
+  const index = dia >= 30 ? dia - 30 : dia; // começa dia 30
+  document.getElementById("mensagem").textContent = mensagens[index] || mensagens[0];
+
+  // Abertura da carta
+  const envelope = document.getElementById('envelope');
+  envelope.addEventListener('click', () => {
+    envelope.classList.toggle('open');
+  });
 </script>
 
 </body>
