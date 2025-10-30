@@ -3,148 +3,112 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Carta de Encerramento Respeitosa</title>
+<title>Carta Picante pra Baixinha</title>
 <style>
-body,html{
-  margin:0; padding:0; height:100%;
-  font-family:'Poppins',sans-serif;
-  background: url('https://lirp.cdn-website.com/46e9b5ee/dms3rep/multi/opt/20230416_085110970_iOS-1920w.jpg') no-repeat center center fixed;
-  background-size: cover;
-  color:#fff;
-  overflow-y:auto; /* permite rolar no celular */
-  scroll-behavior: smooth;
-}
-.overlay{
-  position:fixed; inset:0;
-  background: rgba(0,0,0,0.45);
-  backdrop-filter: blur(2px);
-  z-index:0;
-}
-.container{
-  position:relative;
-  z-index:1;
-  max-width:800px;
-  margin:60px auto;
-  padding:40px 25px;
-  background: rgba(0,0,0,0.35);
-  border-radius:15px;
-  text-align:center;
-  box-shadow: 0 0 20px rgba(0,0,0,0.4);
-}
-h1{
-  font-size:2.3em;
-  margin-bottom:30px;
-  color:#ffdca3;
-  text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-}
-#message{
-  font-size:1.25em;
-  line-height:1.6;
-  white-space: pre-wrap;
-  text-align:left;
-  min-height:220px;
-}
-.cursor{
-  display:inline-block; width:3px; height:1.2em;
-  background:#fff; vertical-align:bottom; margin-left:3px;
-  animation: blink 0.8s steps(1) infinite;
-}
-@keyframes blink{50%{opacity:0}}
-#continueBtn{
-  display:none;
-  margin-top:25px;
-  padding:12px 25px;
-  font-size:1.1em;
-  background:#ffdca3;
-  color:#000;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-  transition: transform 0.2s;
-}
-#continueBtn:hover{transform: scale(1.05);}
-.signature{
-  margin-top:25px; text-align:right; font-weight:600;
-  color:#ffdca3; opacity:0; transition: opacity 2s ease-in;
-}
-.signature.show{opacity:1;}
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+  body {
+    background: linear-gradient(135deg, #0d0d0d, #1a0a0a);
+    color: #f1f1f1;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    min-height: 100vh;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    color: #ff3860;
+    margin-bottom: 20px;
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow {
+    0% { text-shadow: 0 0 5px #ff3860, 0 0 10px #ff3860; }
+    100% { text-shadow: 0 0 20px #ff1f4a, 0 0 40px #ff1f4a; }
+  }
+
+  p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    max-width: 700px;
+    animation: fadeInText 3s ease-in-out;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(255, 77, 109, 0.4);
+  }
+
+  @keyframes fadeInText {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+
+  .buttons {
+    margin-top: 40px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  button {
+    background-color: #ff3860;
+    border: none;
+    color: white;
+    padding: 16px 28px;
+    font-size: 1.1rem;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: 0.4s;
+    box-shadow: 0 0 10px #ff3860;
+    font-weight: 600;
+  }
+
+  button:hover {
+    background-color: #ff1f4a;
+    transform: scale(1.1) rotate(-2deg);
+    box-shadow: 0 0 25px #ff3860, 0 0 50px #ff1f4a;
+  }
+
+  .emoji {
+    display: inline-block;
+    animation: bounce 1.5s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
 </style>
 </head>
 <body>
-<div class="overlay"></div>
-<div class="container">
-  <h1>Carta de Encerramento</h1>
-  <div id="message"></div>
-  <button id="continueBtn">Continuar</button>
-  <div class="signature" id="signature">— Felipe Silva Mota</div>
-</div>
 
-<script>
-const parts = [
-`Eu não queria que isso terminasse assim. Juro que não.
-Desde o começo eu deixei claro o meu jeito: sou 8 ou 80 — quando me entrego, me entrego de verdade.
-Tentei ser inteiro com você, me dedicar, notar os detalhes, acompanhar.
-Na conversa de hoje, percebi que nossas mensagens acabaram gerando desconforto e mal-entendidos.
-Você falou que se sentia pressionada, que tinha perdido paciência com o que chamou de fútil, e que eu estava “de mimimi”.
-Ouvi você e tentei compreender seu lado.
-Minha mãe passou por situações parecidas, e essas palavras — “pressionar” e “fútil” — me marcaram desde cedo, pois acompanhei seu sofrimento.
-Por isso, é importante para mim respeitar limites e sentimentos.`,
+  <h1>Pra minha Baixinha 💋🔥</h1>
 
-`Quero que saiba que nossa conexão foi incrível.
-Começamos a ter intimidade e momentos de proximidade que eu realmente valorizo.
-Entendo que você precisava de tempo e segurança para se sentir à vontade, e respeito isso.
-Sinto que poderíamos ter vivido momentos leves e bons, aproveitando nossa intimidade de forma natural.
-O que aconteceu me fez refletir sobre respeito, espaço e limites, sem julgar ou acusar ninguém.
-Cada experiência e sentimento que compartilhamos foi importante para mim.`,
+  <p>
+    Baixinha… cada vez que penso em você, sinto um fogo que não dá pra apagar 😈🔥.  
+    O jeito que você me olha, como se já soubesse o que vai acontecer, me deixa arrepiado só de lembrar.  
+    <br><br>
+    É aquela mistura de saudade e provocação… um jogo que só a gente entende.  
+    Cada risada sua, cada suspiro, cada toque… me deixa querendo explorar cada pedacinho desse nosso mundo secreto. 💫  
+    <br><br>
+    Da próxima vez, quero te sentir de perto, sentir a tensão, brincar com cada provocação sua, e ver até onde essa química nos leva…  
+    Mas, claro, sem pressa, deixando cada momento se incendiar naturalmente 🔥😈.  
+    <br><br>
+    Só de imaginar você, já sinto meu coração disparar e um sorriso bobo se formar…  
+    e te prometo: quando acontecer de novo, vai ser inesquecível, daqueles momentos que a gente guarda na memória e no coração 💋❤️.
+  </p>
 
-`Agora quero deixar claro algo importante:
-Eu não vou iniciar nenhuma conversa daqui pra frente, principalmente por mensagem.
-Se você quiser realmente que a gente tenha alguma chance, você sabe os horários que estarei em casa — você que venha.
-Se não vier, vou entender que também não quer mais, e seguirei meu caminho.
-Não vou mandar mensagens, nem pressionar.
-Essa é a forma que encontrei de preservar meu espaço e seguir em paz.`
-];
+  <div class="buttons">
+    <button>Me provoca de novo 😈🔥</button>
+    <button>Quero sentir você 💋</button>
+    <button>Vem brincar comigo 😏</button>
+  </div>
 
-const messageEl = document.getElementById('message');
-const continueBtn = document.getElementById('continueBtn');
-const signature = document.getElementById('signature');
-
-let partIndex = 0;
-
-function typeWriter(text, callback){
-  let i = 0;
-  messageEl.innerHTML = '';
-  function type(){
-    if(i < text.length){
-      messageEl.innerHTML = text.slice(0,i+1) + '<span class="cursor"></span>';
-      let delay = 28;
-      const ch = text[i];
-      if(ch===',') delay=90;
-      if(ch==='.') delay=220;
-      if(ch==='\n') delay=150;
-      i++;
-      setTimeout(type, delay);
-    } else{
-      messageEl.innerHTML = text;
-      if(callback) callback();
-    }
-  }
-  type();
-}
-
-window.onload = ()=>{
-  typeWriter(parts[0], ()=>{continueBtn.style.display='block';});
-}
-
-continueBtn.addEventListener('click', ()=>{
-  continueBtn.style.display='none';
-  partIndex++;
-  if(partIndex < parts.length-1){
-    typeWriter(parts[partIndex], ()=>{continueBtn.style.display='block';});
-  } else if(partIndex === parts.length-1){
-    typeWriter(parts[partIndex], ()=>{signature.classList.add('show');});
-  }
-});
-</script>
 </body>
 </html>
