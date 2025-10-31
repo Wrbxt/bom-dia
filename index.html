@@ -16,21 +16,19 @@
     font-family:"Segoe UI",Arial,Helvetica,sans-serif;
     text-align:center;
     overflow:hidden;
+    padding:0 10px; /* garante margem lateral no mobile */
   }
 
-  /* Fundo animado tipo ruído de TV */
   body::before{
     content:"";
     position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
+    top:0;left:0;width:100%;height:100%;
     background:repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 2px);
     animation:noise 0.2s steps(2) infinite;
     pointer-events:none;
     z-index:0;
   }
+
   @keyframes noise{
     0%,100%{transform:translateY(0);}
     50%{transform:translateY(2px);}
@@ -39,22 +37,25 @@
   .container{
     position:relative;
     text-transform:uppercase;
-    letter-spacing:3px;
+    letter-spacing:2px;
     z-index:1;
   }
 
   h1{
-    font-size:4rem;
+    font-size:clamp(2rem, 10vw, 4rem);
     font-weight:900;
-    text-shadow:0 0 10px #ff0000,0 0 30px #ff0000,0 0 60px #ff1a1a;
+    line-height:1.2;
+    text-shadow:0 0 10px #ff0000,0 0 20px #ff0000,0 0 40px #ff1a1a;
     animation:glitch 1s infinite;
+    word-break: break-word;
   }
 
   p{
-    margin-top:1rem;
-    font-size:1.3rem;
+    margin-top:0.5rem;
+    font-size:clamp(1rem,5vw,1.3rem);
     color:#ccc;
-    text-shadow:0 0 5px #555;
+    text-shadow:0 0 3px #555;
+    word-break: break-word;
   }
 
   @keyframes glitch{
@@ -68,11 +69,11 @@
 
   .fade{
     position:fixed;
-    bottom:20px;
+    bottom:15px;
     left:0;
     width:100%;
     color:#888;
-    font-size:14px;
+    font-size:clamp(12px,4vw,14px);
     letter-spacing:1px;
     text-align:center;
     animation:fadein 3s ease-in;
